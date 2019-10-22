@@ -6,21 +6,21 @@ const questions = require('./routes/api/questions');
 
 const app = express();
 
-//Bodyparser middlewear
+// Bodyparser middleware
 
 app.use(bodyParser.json());
 
 
-//Mongo URI or local mongo DB
+// Mongo URI or local mongo DB
 const db = require('./config/keys').mongoURI;
 
-//connect to Mongo
+// connect to Mongo
 mongoose.connect(db)
-    .then(() => console.log('MongoDB connected...'))
-    .catch(err => console.log(err));
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.log(err));
 
 
-//Use Routes
+// Use Routes
 app.use('/api/questions', questions);
 
 const port = process.env.PORT || 5000;

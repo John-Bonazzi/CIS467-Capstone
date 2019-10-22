@@ -1,24 +1,33 @@
 {
-  "name": "exploration-bot",
+  "name": "web-server",
   "version": "1.0.0",
-  "description": "Exploration Bot for GVSU CIS Capstone",
+  "description": "back-end for CIS Capstone, the Exploration Bot",
   "main": "server.js",
   "scripts": {
-    "client-install": "npm install --prefix client",
-    "start": "node server.js",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path .gitignore .",
+    "fix": "eslint --ignore-path .gitignore . --fix",
+    "start": "node server.js"
   },
-  "author": "Clay Negen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GionataB/CIS467-Capstone.git"
+  },
+  "keywords": [
+    "capstone"
+  ],
+  "author": "John Bonazzi",
   "license": "MIT",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "concurrently": "^5.0.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.7.4"
+  "bugs": {
+    "url": "https://github.com/GionataB/CIS467-Capstone/issues"
   },
-    "devDependencies": {
-    "nodemon": "^1.19.3"
+  "homepage": "https://github.com/GionataB/CIS467-Capstone/wiki",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.6"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-strongloop": "^2.1.0"
   }
-} 
+}
