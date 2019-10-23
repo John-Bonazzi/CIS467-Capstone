@@ -16,7 +16,9 @@ const Schema = mongoose.Schema;
 const QuestionSchema = new Schema({
   tag: {
     type: String,
-    required: true
+    required: true,
+    unique: true, //Seems like this does not work properly with mongoose without dropDups
+    dropDups: true //Fails any query that tries to store an element with tag value already existing in the database
   },
   question: {
     type: String,
