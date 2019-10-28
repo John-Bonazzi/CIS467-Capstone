@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import QuestionModal from './components/QuestionModal';
 import { Container } from 'reactstrap';
+import FloatingActionButton from './components/FloatingActionButton';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -18,6 +19,7 @@ class App extends Component {
           <Container>
             <QuestionModal/>
             <QuestionList/>
+            <FloatingActionButton/>
           </Container>
         </div>
       </Provider>
