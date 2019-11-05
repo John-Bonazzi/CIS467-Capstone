@@ -32,6 +32,8 @@ const QuestionSchema = new Schema({
     of: String, //For now, in the end it could be ObjectIDs
     required: true
   }
-});
+},{
+   collection: 'SCIS'
+  });
 
 export let query = mongoose.model('schema', QuestionSchema);
