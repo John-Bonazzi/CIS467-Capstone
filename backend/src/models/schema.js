@@ -34,4 +34,4 @@ const QuestionSchema = new Schema({
   }
 });
 
-export let Question = mongoose.model('schema', QuestionSchema);
+export let query = mongoose.model('schema', QuestionSchema);
