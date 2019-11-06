@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ignore-path ../.gitignore .",
     "lint:fix": "eslint --ignore-path ../.gitignore . --fix",
-    "start": "node server.js"
+    "server:start": "nodemon ./src/server"
   },
   "repository": {
     "type": "git",

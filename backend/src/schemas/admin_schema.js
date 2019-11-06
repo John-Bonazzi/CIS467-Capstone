@@ -23,7 +23,7 @@ const QuestionSchema = new Schema({
   question: {
     type: String,
     required: true
-  },
+  }/*,
   code: {
     type: String
   },
@@ -31,9 +31,9 @@ const QuestionSchema = new Schema({
     type: Map,
     of: String, //For now, in the end it could be ObjectIDs
     required: true
-  }
+  }*/
 },{
    collection: 'SCIS'
   });
 
-export let query = mongoose.model('schema', QuestionSchema);
+module.exports = mongoose.model('schema', QuestionSchema);

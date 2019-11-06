@@ -1,8 +1,12 @@
-const express = require('express');
+// Deprecated code, kept as documentation.
+// The file will be removed by Sprint 4.
+
+
+/*const express = require('express');
 const router = express.Router();
 
 // query Model
-const query = require('../../models/schema');
+const query = require('../schemas/admin_schema');
 
 // @route GET api/query
 // @desc Get all query
@@ -37,10 +41,7 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-/**
- * Function to find elements by using the tag value.
- * WIP - there are a few things that need fixing
-*/
+
 function findByTag(tagValue){
   query.findOne({tag: tagValue}, callback);
 }
@@ -49,3 +50,4 @@ function callback(err, obj){
 }
 
 module.exports = router;
+*/

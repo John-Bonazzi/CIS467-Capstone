@@ -1,10 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const questions = require('./routes/api/questions');
-
 const app = express();
-const router_agent = require('./routes/api/router_agent');
+const router_admin = require('./routing/router_admin');
+const router_user  = require('./routing/router_user');
 
 const PORT = process.env.PORT || 5000;
 
@@ -19,7 +18,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extendend: true }));
 
-app.use('/routes/api/router_agent', database_entry);
+app.use('', router_admin );
+app.use('', router_user);
 
 // Connection string for the database connection.
 const database_agent = require('./config/keys');
