@@ -4,6 +4,7 @@ import QuestionList from './components/QuestionList';
 import { Provider } from 'react-redux';
 import store from './store';
 import QuestionModal from './components/QuestionModal';
+import ChatModal from './components/ChatModal';
 import { Container } from 'reactstrap';
 import FloatingActionButton from './components/FloatingActionButton';
 
@@ -19,7 +20,7 @@ class App extends Component {
           <Container>
             <QuestionModal/>
             <QuestionList/>
-            <FloatingActionButton/>
+            <ChatModal/>
           </Container>
         </div>
       </Provider>

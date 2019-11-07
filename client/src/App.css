@@ -19,3 +19,21 @@
     opacity: 0.01;
     transition: opacity 1000ms ease-in;
 }
+
+.modal-header {
+    background-color: blue;
+    color: white;
+}
+
+.chat-modal-body {
+    height: 600px;
+}
+
+.mt-s {
+    margin-top: 0.25rem !important;
+}
+
+.bot {
+    position: absolute;
+    bottom: 0.5rem;
+}
