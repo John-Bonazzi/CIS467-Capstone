@@ -91,6 +91,7 @@ router.route('/admin').put(function (req, res) {
  */
 router.route('/admin').delete(function (req, res) {
     var id = req.body.name;
+    var opt = req.body.opt;
     db_admin_entry.findOneAndDelete({'tag' : id}, function(err, element){
         if (err) res.status(400).send('unable to delete element');
         else{
