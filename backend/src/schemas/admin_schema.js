@@ -17,9 +17,9 @@ const answerSchema = new Schema({
   },
   link: {
     type: Schema.Types.ObjectId,
-    required: true
+    required: true,
   },
-  course: String
+  course: String,
 });
 
 /* Create the parent schema;
@@ -38,13 +38,13 @@ const QuestionSchema = new Schema({
   tag: {
     type: String,
     required: true,
-    index: true //Make the tag a secondary index, which is unique and is queried faster.
+    index: true, // Make the tag a secondary index, which is unique and is queried faster.
   },
   question: {
     type: String,
-    required: true
+    required: true,
   },
-  /*answers: {
+  /* answers: {
     type: [answerSchema],
     required: true,
   }/*,
@@ -52,9 +52,9 @@ const QuestionSchema = new Schema({
     type: String
   },
   */
-},{
-   collection: 'SCIS'//,
-   //strict: false
-  });
+}, {
+  collection: 'SCIS', //,
+  // strict: false
+});
 
 module.exports = mongoose.model('schema', QuestionSchema);
