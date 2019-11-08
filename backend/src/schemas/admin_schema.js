@@ -19,23 +19,24 @@ const QuestionSchema = new Schema({
   tag: {
     type: String,
     required: true,
-    unique: true, //Seems like this does not work properly with mongoose without dropDups
-    dropDups: true //Fails any query that tries to store an element with tag value already existing in the database
+    index: true //Make the tag a secondary index, which is unique and is queried faster.
   },
   question: {
     type: String,
     required: true
-  }/*,
+  },
+  /*answers: [{
+    body: String,
+    link: Schema.Types.ObjectId
+  }]
+  ,
   code: {
     type: String
   },
-  answer: {
-    type: Map,
-    of: String, //For now, in the end it could be ObjectIDs
-    required: true
-  }*/
+  */
 },{
-   collection: 'SCIS'
+   collection: 'SCIS'//,
+   //strict: false
   });
 
 module.exports = mongoose.model('schema', QuestionSchema);
