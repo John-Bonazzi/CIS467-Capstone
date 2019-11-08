@@ -2,3 +2,4 @@ backend/node_modules/
 .eslintrc.json
 .DS_store
 /.vscode
+/test files

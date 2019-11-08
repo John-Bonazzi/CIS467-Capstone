@@ -20,7 +20,7 @@ const answerSchema = new Schema({
     required: true,
   },
   course: String,
-});
+}, { _id: false });
 
 /* Create the parent schema;
  *  Each element in the schema is made up of:
@@ -44,7 +44,7 @@ const QuestionSchema = new Schema({
     type: String,
     required: true,
   },
-  /* answers: {
+  answers: {
     type: [answerSchema],
     required: true,
   }/*,
