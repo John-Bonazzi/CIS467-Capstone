@@ -27,7 +27,7 @@ const database_agent = require('./config/keys');
 /*
  * Connect the server to the database to provide the service.
  */
-mongoose.connect(database_agent.mongoURI, {useNewUrlParser: true})
+mongoose.connect(database_agent.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(()  => console.log('Connection to the database established'), 
   err => console.log(`Could not connect to the database.\nError code: ${err}`));
 

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+mongoose.set('useCreateIndex', true);
+
 /* Create the schema;
    Eeach element in the schema is made up of:
    - tag: a human readable unique ID that will be used by the admin panel
