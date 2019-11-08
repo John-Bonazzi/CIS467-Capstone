@@ -35,7 +35,7 @@ router.route('/admin').post(function (req, res) {
  */
 router.route('/admin').get(function (req, res) {
     var id = req.body.name;
-    db_admin_entry.findOne({'tag' : id}, 'tag question', function (err, element){
+    db_admin_entry.findOne({'tag' : id}, /*'tag question',*/ function (err, element){
         if (err) res.status(400).send('Unable to find element');
         else { 
             try{
