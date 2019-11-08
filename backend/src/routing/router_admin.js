@@ -87,7 +87,24 @@ router.route('/admin').put(function(req, res) {
  */
 router.route('/admin').delete(function(req, res) {
   var id = req.body.name;
-  var opt = req.body.opt;
+  try {
+    var opt = req.body.option;
+  } catch(err){
+    opt = 1;
+  }
+  // +++++++++++++++++++++++++++++++++++++++
+  // EXTREMELY DANGEROUS. Delete all entries in a collection.
+  // +++++++++++++++++++++++++++++++++++++++
+  if(opt === "0"){
+    db_admin_entry.deleteMany({}, function(err, element){
+      if (err) res.status(400).send('unable to delete all');
+      else {
+        console.log('all elements deleted');
+        res.json('Elements successfully deleted');
+      }
+    });
+  }
+  else{
   db_admin_entry.findOneAndDelete({tag: id}, function(err, element){
     if (err) res.status(400).send('unable to delete element');
     else {
@@ -100,6 +117,7 @@ router.route('/admin').delete(function(req, res) {
       }
     }
   });
+  }
 });
 
 module.exports = router;
