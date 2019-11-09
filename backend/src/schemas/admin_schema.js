@@ -29,10 +29,8 @@ const answerSchema = new Schema({
  *  - question: the question passed to the front-end.
  *  - code: some kind of logic that has to be run to decide the next question.
  *    the code element is optional, as only complex questions would need it.
- *  - answer: a map of answers, answers can be one or more, and should have
- *   and objectID connected to them, or a keyword (TBD) to tell the program
- *   to evaluate the code stored in the item. In this case, the key is the answer.
- *   If that does not work, in the future it could be changed to a nested element (TBD).
+ *  - answer: an array of answers, answers can be one or more.
+ *    For a more detailed explanation, check its schema documentation.
 */
 const QuestionSchema = new Schema({
   tag: {
@@ -47,14 +45,9 @@ const QuestionSchema = new Schema({
   answers: {
     type: [answerSchema],
     required: true,
-  }/*,
-  code: {
-    type: String
-  },
-  */
+  }
 }, {
-  collection: 'SCIS', //,
-  // strict: false
+  collection: 'SCIS',
 });
 
 module.exports = mongoose.model('schema', QuestionSchema);

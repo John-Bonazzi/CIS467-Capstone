@@ -35,18 +35,34 @@ router.route('/admin').post(function(req, res) {
  */
 router.route('/admin').get(function(req, res) {
   var id = req.body.name;
-  db_admin_entry.findOne({tag: id}, /* 'tag question',*/ function(err, element){
-    if (err) res.status(400).send('Unable to find element');
-    else {
-      try {
-        console.log('id: %s\nquestion: %s.', element.tag, element.question);
-      } catch (err){
-        error_handler.itemNotFound(id);
-      } finally {
+  try {
+    var opt = req.body.option;
+  } catch(err){
+    opt = 1;
+  }
+  if(opt === "0"){
+    db_admin_entry.find({}, function(err, element){
+      if (err) res.status(400).send('Unable to complete request');
+      else{
+        console.log("Requested all elements.");
         res.json(element);
       }
-    }
-  });
+    });
+  }
+  else{
+    db_admin_entry.findOne({tag: id}, /* 'tag question',*/ function(err, element){
+      if (err) res.status(400).send('Unable to find element');
+      else {
+        try {
+          console.log('id: %s\nquestion: %s.', element.tag, element.question);
+        } catch (err){
+          error_handler.itemNotFound(id);
+        } finally {
+          res.json(element);
+        }
+      }
+    });
+  }
 });
 
 /*
@@ -64,7 +80,7 @@ router.route('/admin').put(function(req, res) {
     if (err) res.status(400).send('Unable to update element');
     else {
       try {
-        console.log('id: %s\nquestion: %s.', element.tag, element.question);
+        console.log('id: %s\nquestion: %s', element.tag, element.question);
       } catch (err){
         error_handler.itemNotFound(id);
       } finally {
