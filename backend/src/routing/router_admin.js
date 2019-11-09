@@ -34,7 +34,11 @@ router.route('/admin').post(function(req, res) {
  * element, searched by _id, as that is what is saved in the answers.
  */
 router.route('/admin').get(function(req, res) {
-  var id = req.body.name;
+  try{
+    var id = req.body.name;
+  } catch(err){
+    id = null;
+  }
   try {
     var opt = req.body.option;
   } catch(err){
@@ -102,7 +106,11 @@ router.route('/admin').put(function(req, res) {
  * 2: delete part of an element in bulk on multiple elements
  */
 router.route('/admin').delete(function(req, res) {
-  var id = req.body.name;
+  try{
+    var id = req.body.name;
+  } catch(err){
+    id = null;
+  }
   try {
     var opt = req.body.option;
   } catch(err){
