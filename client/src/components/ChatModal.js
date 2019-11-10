@@ -15,6 +15,7 @@ import OneQuestion from './OneQuestion';
 import Answers from './Answers';
 import { Container } from 'react-floating-action-button';
 import { Button as FAB } from 'react-floating-action-button';
+import { FaDiscourse } from 'react-icons/fa';
 
 
 class ChatModal extends Component {
@@ -54,10 +55,11 @@ class ChatModal extends Component {
                 <FAB
                         tooltip="Click Here To Chat!"
                         styles={{backgroundColor: "#0095ff"}}
-                        icon=""
+                        icon= {FaDiscourse}
                         rotate={true}
                         onClick={this.toggle}>
                 </FAB>
+                </Container>
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
@@ -72,7 +74,6 @@ class ChatModal extends Component {
                         <Answers/>
                     </ModalBody>
                 </Modal>
-                </Container>
             </div>
         )
     }
