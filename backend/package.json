@@ -1,0 +1,35 @@
+{
+  "name": "web-server",
+  "version": "1.0.0",
+  "description": "back-end for CIS Capstone, the Exploration Bot",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --ignore-path ../.gitignore .",
+    "lint:fix": "eslint --ignore-path ../.gitignore . --fix",
+    "server:start": "nodemon ./src/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GionataB/CIS467-Capstone.git"
+  },
+  "keywords": [
+    "capstone"
+  ],
+  "author": "John Bonazzi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GionataB/CIS467-Capstone/issues"
+  },
+  "homepage": "https://github.com/GionataB/CIS467-Capstone/wiki",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.6",
+    "nodemon": "^1.19.4"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.1",
+    "eslint-config-strongloop": "^2.1.0"
+  }
+}
