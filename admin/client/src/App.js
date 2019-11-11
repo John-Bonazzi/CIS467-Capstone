@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import QuestionModal from './components/QuestionModal';
 import { Container } from 'reactstrap';
+//import AppChatButton from './components/AppChatButton';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -19,6 +20,7 @@ class App extends Component {
             <QuestionModal/>
             <QuestionList/>
           </Container>
+          
         </div>
       </Provider>
     );
