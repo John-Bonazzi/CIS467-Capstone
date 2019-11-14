@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const router_admin = require('./routing/router_admin');
-const router_user = require('./routing/router_user');
+const router_admin = require('./routing/admin/question_admin');
+const router_user = require('./routing/user/router_user');
 
 const PORT = process.env.PORT || 5000;
 
