@@ -4,11 +4,13 @@ const router = express.Router();
 
 const db_user_query = require('../../schemas/admin_schema');
 const db_user_entry = require('../../schemas/user_schema');
+const queries = require('./queries/queries');
 
 router.route('/user').get(function(req, res) {
   var id = req.body.id;
   var answer = req.body.ans;
-  db_user_query.findOne({tag: id}, 
+  queries.getNextElement(db_user_query, id, res);
+  /*db_user_query.findOne({tag: id}, 
     { 'answers': {
         $elemMatch: {
           'body': answer,}}}, function(err, element){
@@ -26,7 +28,7 @@ router.route('/user').get(function(req, res) {
           error_handler.itemNotFound(id);
       } 
       }
-    });
+    });*/
 });
 
 module.exports = router;

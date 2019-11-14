@@ -14,13 +14,7 @@ const queries = require('./queries/question_queries');
  */
 router.route(questionRoute).post(function(req, res) {
   const entry = new db_admin_entry(req.body);
-  entry.save()
-    .then(entry => {
-      res.json('Entry added successfully.');
-    })
-    .catch(err => {
-      res.status(500).send('unable to save to database.');
-    });
+  queries.postOneElement(entry, res);
 });
 
 /*
@@ -47,7 +41,7 @@ router.route(questionRoute).get(function(req, res) {
       break;
     
     case '1':
-      queries.getOneElement(db_admin_entry, {tag: id}, res);
+      queries.getOneElement(db_admin_entry, {tag: id}, '', res);
       break;
 
     default:
@@ -69,18 +63,7 @@ router.route(questionRoute).put(function(req, res) {
   var id = req.body.name;
   var update_param = {};
   update_param[req.body.element] = req.body.update;
-  db_admin_entry.findOneAndUpdate({tag: id}, update_param, {new: true, runValidators: true}, function(err, element) {
-    if (err) res.status(500).send('Unable to update element');
-    else {
-      try {
-        console.log('id: %s\nquestion: %s', element.tag, element.question);
-      } catch (err){
-        error_handler.itemNotFound(id);
-      } finally {
-        res.json(element);
-      }
-    }
-  });
+  queries.updateOneElement(db_admin_entry, {tag: id}, update_param, res);
 });
 
 /*
