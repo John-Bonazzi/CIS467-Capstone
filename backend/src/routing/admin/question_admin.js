@@ -1,10 +1,11 @@
-const error_handler = require('../../Error_handling/Error');
+const error_handler = require('../../error_handling/Error');
 const express = require('express');
 const router = express.Router();
 
 const db_admin_entry = require('../../schemas/admin_schema');
 const {questionRoute} = require('./routes');
 const queries = require('./queries/question_queries');
+const routines = require('../../routines/http_routines');
 
 /*
  * The POST request creates an entry in the database.
@@ -14,7 +15,10 @@ const queries = require('./queries/question_queries');
  */
 router.route(questionRoute).post(function(req, res) {
   const entry = new db_admin_entry(req.body);
-  queries.postOneElement(entry, res);
+  queries.postOneElement(entry, function(err){
+    if (err) res.status(500).send('Unable to save to database.');
+    else res.json('Entry added successfully.');
+  });
 });
 
 /*
@@ -37,11 +41,11 @@ router.route(questionRoute).get(function(req, res) {
   }
   switch (opt) {
     case '0':
-      queries.getAllElements(db_admin_entry, res);
+      routines.get_all(res, queries, db_admin_entry);
       break;
     
     case '1':
-      queries.getOneElement(db_admin_entry, {tag: id}, '', res);
+      routines.get_one(res, queries, db_admin_entry, {tag: id}, '');
       break;
 
     default:
@@ -49,7 +53,6 @@ router.route(questionRoute).get(function(req, res) {
       break;
   }
 });
-
 
 
 /*

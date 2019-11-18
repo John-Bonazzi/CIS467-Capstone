@@ -1,50 +1,34 @@
-const error_handler = require('../../../Error_handling/Error');
+const error_handler = require('../../../error_handling/Error');
 
 /********************************************************
 * POST QUERIES
 ********************************************************/
 
-function postOneElement(newElement, res){
-  newElement.save()
-    .then(newElement => {
-      res.json('Entry added successfully.');
-    })
-    .catch(err => {
-      res.status(500).send('unable to save to database.');
-    });
+function postOneElement(newElement, callback){
+  var e = null;
+  newElement.save(function(err){
+    if (err) e = true;
+    callback(e);
+  });
 }
 
 /********************************************************
 * GET QUERIES
 ********************************************************/
 
-function getOneElement(database, searchTerm, selectTerm, res){
-  var element_copy;
+function getOneElement(database, searchTerm, selectTerm, callback){
+  var e = false;
   database.findOne(searchTerm, selectTerm, function(err, element){
-    if (err) res.status(500).send('Unable to complete request.');
-    else {
-      try {
-        console.log(element);
-        res.json(element);
-      } catch (err){
-        res.status(400).send('Element not found.');
-        error_handler.itemNotFound(searchTerm.tag);
-      }
-      finally{
-        element_copy = element;
-      }
-    }
+    if (err) e = 'Unable to find element';
+    callback(e, element);
   });
-  return element_copy;
 }
 
-function getAllElements(database, res){
+function getAllElements(database, callback){
+  var e = false;
   database.find({}, function(err, element){
-      if (err) res.status(500).send('Unable to complete request');
-      else{
-        console.log("Requested all elements.");
-        res.json(element);
-      }
+      if (err) e = 'Unable to complete request';
+      callback(e, element);
   });
 }
 

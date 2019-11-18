@@ -34,6 +34,5 @@ mongoose.connect(database_agent.mongoURI, {useNewUrlParser: true, useUnifiedTopo
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}
-);
+});
 
