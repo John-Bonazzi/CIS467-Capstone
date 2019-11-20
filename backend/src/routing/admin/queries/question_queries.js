@@ -4,6 +4,14 @@ const error_handler = require('../../../error_handling/Error');
 * POST QUERIES
 ********************************************************/
 
+/**
+ * The query takes a database entry in the form of a mongoose Schema object, and inserts it into the database.
+ * If an error occurs, 'e' will be set to true.
+ * Generally, this means that the server was not able to save on the database, most of the time because another element with the same unique key is in the database.
+ * @param {mongoose.Schema} newElement a Schema object containing the entry to insert in the database 
+ * @callback callback callback to manage the response from the server
+ * @param {?bool} callback.e an error message, null if there is no error 
+ */
 function postOneElement(newElement, callback){
   var e = null;
   newElement.save(function(err){
@@ -33,7 +41,7 @@ function getAllElements(database, callback){
 }
 
 /********************************************************
-* DELETE QUERIES
+* PUT QUERIES
 ********************************************************/
 
 function updateOneElement(database, searchTerm, update, res){

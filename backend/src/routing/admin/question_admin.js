@@ -87,11 +87,11 @@ router.route(questionRoute).delete(function(req, res) {
     opt = '1';
   }
   switch (opt){
-    case 0:
+    case '0':
       queries.deleteAllElements(db_admin_entry, res);
       break;
 
-    case 1:
+    case '1':
       queries.deleteOneElement(db_admin_entry, {tag: id}, res);
       break;
     

@@ -1,3 +1,8 @@
+/**
+ * An error used when there is a problem in the console output when testing.
+ * For example, if an element is not present in a JSON file, this error would help identify the missing value.
+ * @param {*} id the value that threw the error. 
+ */
 function itemNotFound(id) {
   console.log('The requested element with id: %s does not exist.', id);
 }
