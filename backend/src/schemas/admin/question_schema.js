@@ -8,8 +8,8 @@ mongoose.set('useCreateIndex', true);
  * Create the child schema for the answer field.
  * Consideration: if the link array has multiple links with the same exact requirements, only one will be chosen, probably the first one found. This is an undefined behavior as per requirements, so it is not actively handled by the server, but passively by the database.
  * Each element in the schema is made up of:
- * - content: see contentSchema
- * - link: see linkSchema
+ * - content: an array of contentSchema elements. see contentSchema for description.
+ * - link: an array of linkSchema elements. see linkSchema for description.
  * @const {mongoose.Schema}
  * @see contentSchema
  * @see linkSchema

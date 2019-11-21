@@ -71,8 +71,51 @@ function get_all(res, queryAgent, database){
     }
 }
 
+/**
+ * Routine to store a new element in the database.
+ * @param {Object} res the Express res Object used to send back a response.
+ * @param {module} queryAgent the module containing the queries to use 
+ * @param {mongoose.Schema} newElement an element that is created following the Schema.
+ */
+function post_one(res, queryAgent, newElement){
+    try{
+        queryAgent.postOneElement(newElement, function(err){
+            if (err) error_handler.badServerHandler(res, 'Unable to save to database.');
+            else res.json('Entry added successfully.');
+        });
+    }
+    catch(err){
+        error_handler.badServerHandler(res, "The query agent does not have a postOneElement function."); 
+    }
+}
+
+/**
+ * Routine to update one element. 
+ * The routine updates a single field in an element.
+ * Depending on the definition of updateOneElement, a new element, or field, can be created if it does not already exist. 
+ * check the documentation of updateOneElement to make sure of its behavior.
+ * @param {Object} res the Express res Object used to send back a response.
+ * @param {module} queryAgent the module containing the queries to use
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema
+ * @param {json} searchTerm JSON containing the terms used for the database search
+ * @param {json} update JSON containing the field to update, and its new value
+ */
+function update_one(res, queryAgent, database, searchTerm, update){
+    try{
+        queryAgent.updateOneElement(database, searchTerm, update, function(err, element){
+            if (err) error_handler.badServerHandler(res, 'Unable to update the database.');
+            else res.json(element);
+        });
+    }
+    catch(err){
+        error_handler.badServerHandler(res, "The query agent does not have an updateOneElement function."); 
+    }
+}
+
 module.exports = {
     get_init: get_init,
     get_one: get_one,
-    get_all: get_all
+    get_all: get_all,
+    post_one: post_one,
+    update_one: update_one
 }

@@ -2,7 +2,7 @@ const error_handler = require('../../error_handling/Error');
 const express = require('express');
 const router = express.Router();
 
-const db_admin_entry = require('../../schemas/admin/question_schema');
+const db_admin = require('../../schemas/admin/question_schema');
 const {questionRoute} = require('./routes');
 const queries = require('./queries/question_queries');
 const routines = require('../../routines/http_routines');
@@ -18,11 +18,8 @@ const routines = require('../../routines/http_routines');
  * @see putRoute
  */
 router.route(questionRoute).post(function(req, res) {
-  const entry = new db_admin_entry(req.body);
-  queries.postOneElement(entry, function(err){
-    if (err) error_handler.badServerHandler(res, 'Unable to save to database.');
-    else res.json('Entry added successfully.');
-  });
+  const db_entry = new db_admin(req.body);
+  routines.post_one(res, queries, db_entry);
 });
 
 /**
@@ -42,11 +39,11 @@ router.route(questionRoute).get(function(req, res) {
   }
   switch (opt) {
     case '0':
-      routines.get_all(res, queries, db_admin_entry);
+      routines.get_all(res, queries, db_admin);
       break;
     
     case '1':
-      routines.get_one(res, queries, db_admin_entry, {tag: id}, '');
+      routines.get_one(res, queries, db_admin, {tag: id}, '');
       break;
 
     default:
@@ -70,7 +67,7 @@ router.route(questionRoute).put(function(req, res) {
   var id = req.body.name;
   var update_param = {};
   update_param[req.body.element] = req.body.update;
-  queries.updateOneElement(db_admin_entry, {tag: id}, update_param, res);
+  routines.update_one(res, queries, db_admin, {tag: id}, update_param);
 });
 
 /**
@@ -92,11 +89,11 @@ router.route(questionRoute).delete(function(req, res) {
   }
   switch (opt){
     case '0':
-      queries.deleteAllElements(db_admin_entry, res);
+      queries.deleteAllElements(db_admin, res);
       break;
 
     case '1':
-      queries.deleteOneElement(db_admin_entry, {tag: id}, res);
+      queries.deleteOneElement(db_admin, {tag: id}, res);
       break;
     
     default:

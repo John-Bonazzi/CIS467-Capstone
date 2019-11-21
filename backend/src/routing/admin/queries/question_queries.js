@@ -75,7 +75,9 @@ function getAllElements(database, callback){
  * @param {mongoose.Schema} database the database as defined in a mongoose schema
  * @param {json} searchTerm JSON containing the terms used for the database search
  * @param {json} update JSON containing the field(s) to update/add
- * FIXME: FINISH HERE.
+ * @callback callback callback to manage the response from the server
+ * @param {?string} callback.e an error message, null if there is no error
+ * @param {json} callback.element the updated database element.
  */
 function updateOneElement(database, searchTerm, update, callback){
   var e = null;
