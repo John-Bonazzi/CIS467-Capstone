@@ -2,7 +2,7 @@ const error_handler = require('../../error_handling/Error');
 const express = require('express');
 const router = express.Router();
 
-const db_user_query = require('../../schemas/admin_schema');
+const db_user_query = require('../../schemas/admin/question_schema');
 const db_user_entry = require('../../schemas/user_schema');
 const queries = require('./queries/queries');
 const routines = require('../../routines/http_routines');

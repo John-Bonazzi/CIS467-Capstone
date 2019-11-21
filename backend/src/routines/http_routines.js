@@ -22,10 +22,15 @@ const error_handler = require('../error_handling/Error');
  * @see get_one
  */
 function get_init(res, queryAgent, database, searchTerm, selectTerm){
+    try{
     queryAgent.getInitElement(database, searchTerm, selectTerm, function(err, element){
        if (err) error_handler.badServerHandler(res, err);
        else res.json(element); 
     });
+    }
+    catch(err){
+        error_handler.badServerHandler(res, "The query agent does not have a getInitElement function.");
+    }
 }
 
 /**
@@ -55,10 +60,15 @@ function get_one(res, queryAgent, database, searchTerm, selectTerm){
  * @param {mongoose.Schema} database the database as defined in a mongoose schema 
  */
 function get_all(res, queryAgent, database){
+    try{
     queryAgent.getAllElements(database, function(err, element){
         if(err) error_handler.badClientRequest(res, err);
         else res.json(element);
     });
+    }
+    catch(err){
+        error_handler.badServerHandler(res, "The query agent does not have a getAllElements function.");
+    }
 }
 
 module.exports = {
