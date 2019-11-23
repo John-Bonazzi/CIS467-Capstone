@@ -1,5 +1,3 @@
-const error_handler = require('../../../error_handling/Error');
-
 /********************************************************
 * POST QUERIES
 ********************************************************/
@@ -107,28 +105,39 @@ function updateOneElement(database, searchTerm, update, callback){
 * DELETE QUERIES
 ********************************************************/
 
-function deleteOneElement(database, searchTerm, res){
+/**
+ * The query deletes one element, the first one matching the search term provided.
+ * The callback from the query returns the deleted element.
+ * This query deletes the whole element, not part of it.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json} searchTerm JSON containing the terms used for the database search.
+ * @callback callback callback to manage the response from the server.
+ * @param {?string} callback.e an error message, null if there is no error.
+ * @param {json} callback.element the deleted database element.
+ */
+function deleteOneElement(database, searchTerm, callback){
+  var e = null;
   database.findOneAndDelete(searchTerm, function(err, element){
-    if (err) res.status(500).send('unable to complete request');
-    else {
-      try {
-        console.log('element id: %s deleted successfully', element.tag);
-        res.json('Element successfully deleted');
-      } catch (err){
-        error_handler.itemNotFound(searchTerm.tag);
-        res.status(400).send('The requested item does not exist in the database.');
-      }
-    }
+    if (err) e = 'unable to complete request';
+    else callback(e, element);
   });
 }
 
-function deleteAllElements(database, res){
-  database.deleteMany({}, function(err, element){
-    if (err) res.status(500).send('unable to complete request.');
-    else {
-      console.log('all elements deleted');
-      res.json('Elements successfully deleted');
-    }
+/**
+ * The query is shorthand for deleting all elements in the database.
+ * No search term has to be passed, as it defaults to any element (the empty set '{}').
+ * The callback from the query returns, in this case, the whole collection.
+ * At the end of this call, the collection is effectively wiped out, so be careful in calling it.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @callback callback callback to manage the response from the server.
+ * @param {?string} callback.e an error message, null if there is no error.
+ * @param {json} callback.elements the deleted collection of elements.
+ */
+function deleteAllElements(database, callback){
+  var e = null;
+  database.deleteMany({}, function(err, elements){
+    if (err) e = 'unable to complete request.';
+    else callback(e, elements);
   });
 }
 

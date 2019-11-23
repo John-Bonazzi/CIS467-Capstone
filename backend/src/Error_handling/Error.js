@@ -8,6 +8,14 @@ function itemNotFound(id) {
 }
 
 /**
+ * Generic error handling that logs a message to the console.
+ * @param {*} message anything to be printend by the console.
+ */
+function logError(message){
+  console.log(message);
+}
+
+/**
  * An error used when the syntax in the client's request cannot be understood by the server. 
  * It is assumed that the server was able to complete the request, but that the request was wrong to begin with (like a query for a non-existent database element), so the status code returned is 400.
  * @param {Object} res the Express res Object used to send back a response.
@@ -53,6 +61,7 @@ function validationError(res, document){
 
 module.exports = {
   itemNotFound: itemNotFound,
+  logError: logError,
   badClientRequest: badClientRequest,
   badServerHandler: badServerHandler,
   functionDoesNotExist: functionDoesNotExist,
