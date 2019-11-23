@@ -7,8 +7,6 @@ const db_user_entry = require('../../schemas/user_schema');
 const queries = require('./queries/queries');
 const routines = require('../../routines/http_routines');
 
-// If the server causes problems with multiple users connected, this is probably the cause (check cb as well)
-var firstRequest = true;
 
 /**
  * Callback function used by express.Router.route.get function.
@@ -18,11 +16,19 @@ var firstRequest = true;
  * @param {Object} res the http response
  */
 function cb(req, res){
-  if (firstRequest) {
-    routines.get_init(res, queries, db_user_query, {tag: 'Initial'}, '');
-    firstRequest = false;
+  var returningUser = req.session.returning;
+  if (returningUser) {
+    var link = req.body.link;
+
+    //this supports for the user to start where they left, if they disconnect.
+    if (link == null) link = req.session.lastLink;
+    else req.session.lastLink = link;
+    routines.get_one(res, queries, db_user_query, link, '');
   }
-  else routines.get_one(res, queries, db_user_query, req.body.link, '');
+  else {
+    routines.get_init(req, res, queries, db_user_query, {tag: 'Initial'}, '');
+    req.session.returning = true;
+  }
 }
 
 router.route('/user').get(cb);

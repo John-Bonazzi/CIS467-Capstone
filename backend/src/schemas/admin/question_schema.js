@@ -5,27 +5,6 @@ var ObjectID = mongoose.Schema.Types.ObjectId;
 mongoose.set('useCreateIndex', true);
 
 /**
- * Create the child schema for the answer field.
- * Consideration: if the link array has multiple links with the same exact requirements, only one will be chosen, probably the first one found. This is an undefined behavior as per requirements, so it is not actively handled by the server, but passively by the database.
- * Each element in the schema is made up of:
- * - content: an array of contentSchema elements. see contentSchema for description.
- * - link: an array of linkSchema elements. see linkSchema for description.
- * @const {mongoose.Schema}
- * @see contentSchema
- * @see linkSchema
- */
-const answerSchema = new Schema({
-  content: {
-    type: [contentSchema],
-    required: true,
-  },
-  link: {
-    type: [linkSchema],
-    required: true,
-  },
-}, { _id: false });
-
-/**
  * The contentSchema is a child schema for answerSchema.
  * It is used to enable multiple-choice answers.
  * This way, it is possible to select multiple answers (and store them for example), but still proceed to the next question.
@@ -62,6 +41,27 @@ const linkSchema = new Schema({
     required: true
   },
 }, { _id: false});
+
+/**
+ * Create the child schema for the answer field.
+ * Consideration: if the link array has multiple links with the same exact requirements, only one will be chosen, probably the first one found. This is an undefined behavior as per requirements, so it is not actively handled by the server, but passively by the database.
+ * Each element in the schema is made up of:
+ * - content: an array of contentSchema elements. see contentSchema for description.
+ * - link: an array of linkSchema elements. see linkSchema for description.
+ * @const {mongoose.Schema}
+ * @see contentSchema
+ * @see linkSchema
+ */
+const answerSchema = new Schema({
+  content: {
+    type: [contentSchema],
+    required: true,
+  },
+  link: {
+    type: [linkSchema],
+    required: true,
+  },
+}, { _id: false });
 
 /**
  *  Create the parent schema;

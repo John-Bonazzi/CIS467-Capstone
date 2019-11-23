@@ -15,6 +15,7 @@ const error_handler = require('../error_handling/Error');
  * If no element is present, this routine sets the status as '500', meaning a server error. 
  * This is because the client doesn't send anything with the request, so it is an internal problem in the server.
  * It works similarly to get_one, see get_one documentation to know how it works.
+ * @param {Object} req the Express req Object used by the client to send a request.
  * @param {Object} res the Express res Object used to send back a response.
  * @param {module} queryAgent the module containing the queries to use
  * @param {mongoose.Schema} database the database as defined in a mongoose schema
@@ -22,11 +23,14 @@ const error_handler = require('../error_handling/Error');
  * @param {string} selectTerm the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.
  * @see get_one
  */
-function get_init(res, queryAgent, database, searchTerm, selectTerm){
+function get_init(req, res, queryAgent, database, searchTerm, selectTerm){
     try{
     queryAgent.getInitElement(database, searchTerm, selectTerm, function(err, element){
        if (err) error_handler.badServerHandler(res, err);
-       else res.json(element); 
+       else {
+           req.session.lastLink = element._id;
+           res.json(element);
+       }
     });
     }
     catch(err){

@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
-const app = express();
 const router_admin = require('./routing/admin/question_admin');
 const router_user = require('./routing/user/router_user');
+
+const app = express();
 
 const PORT = process.env.PORT || 5000;
 
@@ -18,6 +20,24 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/**
+ * Allows for storing session-related values.
+ * expires: false means that the session remains active as long as the user-agent is active, or the session is manually destroyed.
+ * That means in the case the user closes the browser web, the session is destroyed.
+ * maxAge, in msec, is the time between requests that has to pass before the session can be considered expired.
+ * Unfortunately, most browser-webs ingore expires if there is a maxAge.
+ * There is a choice to make: reset the session upon disconnection, or reset it upon inactivity.
+ * Note that maxAge is highly recommended in most cases, while expire is an old standard.
+ */
+app.use(session({
+  secret: 'capstone',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: false,
+    maxAge: 5 * 60 * 1000, //convert 1 sec (1000 msec) to 5 mins. 5 + 1 min in 60 sec, 60 * 1 sec in 1000 msec.
+  }
+}));
 
 app.use('', router_admin);
 app.use('', router_user);
@@ -36,3 +56,4 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+module.exports = app;
