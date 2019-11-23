@@ -3,6 +3,7 @@
  * response to an event.
  * While the 'routing' decides what routines to execute based on the request,
  * the routines decide how to handle the data requested.
+ * Routines can do data manipulation, while queries should not do any work on the data, but provide an easy to use abstraction of the syntax and options, with documentations, for some of the harder mongoose queries.
  * @module routines/http_routines
  * @requires src/error_handling/Error
  */
@@ -29,7 +30,7 @@ function get_init(res, queryAgent, database, searchTerm, selectTerm){
     });
     }
     catch(err){
-        error_handler.badServerHandler(res, "The query agent does not have a getInitElement function.");
+        error_handler.functionDoesNotExist(res, "The query agent does not have a getInitElement function.");
     }
 }
 
@@ -49,15 +50,15 @@ function get_one(res, queryAgent, database, searchTerm, selectTerm){
         else res.json(element);
     });}
     catch(err){
-        error_handler.badServerHandler(res, "The query agent does not have a getOneElement function.");
+        error_handler.functionDoesNotExist(res, "The query agent does not have a getOneElement function.");
     }
 }
 
 /**
  * Routine to use when all the elements in the database are required.
  * @param {Object} res the Express res Object used to send back a response.
- * @param {module} queryAgent the module containing the queries to use
- * @param {mongoose.Schema} database the database as defined in a mongoose schema 
+ * @param {module} queryAgent the module containing the queries to use.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
  */
 function get_all(res, queryAgent, database){
     try{
@@ -67,14 +68,14 @@ function get_all(res, queryAgent, database){
     });
     }
     catch(err){
-        error_handler.badServerHandler(res, "The query agent does not have a getAllElements function.");
+        error_handler.functionDoesNotExist(res, "The query agent does not have a getAllElements function.");
     }
 }
 
 /**
  * Routine to store a new element in the database.
  * @param {Object} res the Express res Object used to send back a response.
- * @param {module} queryAgent the module containing the queries to use 
+ * @param {module} queryAgent the module containing the queries to use.
  * @param {mongoose.Schema} newElement an element that is created following the Schema.
  */
 function post_one(res, queryAgent, newElement){
@@ -85,7 +86,26 @@ function post_one(res, queryAgent, newElement){
         });
     }
     catch(err){
-        error_handler.badServerHandler(res, "The query agent does not have a postOneElement function."); 
+        error_handler.functionDoesNotExist(res, "The query agent does not have a postOneElement function."); 
+    }
+}
+
+/**
+ * Routine to store an array of elements in the database.
+ * @param {Object} res the Express res Object used to send back a response.
+ * @param {module} queryAgent the module containing the queries to use.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json[]} elementsArr an array of json documents, each json corresponding to a new entry in the database.
+ */
+function post_many(res, queryAgent, database, elementsArr){
+    try{
+        queryAgent.postManyElements(database, elementsArr, function(err){
+            if (err) error_handler.validationError(res, err);
+            else res.json("All documents successfully saved");
+        });
+    }
+    catch(err){
+        error_handler.functionDoesNotExist(res, "The query agent does not have a postManyElements function."); 
     }
 }
 
@@ -108,7 +128,7 @@ function update_one(res, queryAgent, database, searchTerm, update){
         });
     }
     catch(err){
-        error_handler.badServerHandler(res, "The query agent does not have an updateOneElement function."); 
+        error_handler.functionDoesNotExist(res, "The query agent does not have an updateOneElement function."); 
     }
 }
 
@@ -117,5 +137,6 @@ module.exports = {
     get_one: get_one,
     get_all: get_all,
     post_one: post_one,
+    post_many: post_many,
     update_one: update_one
 }

@@ -8,7 +8,7 @@ const queries = require('./queries/question_queries');
 const routines = require('../../routines/http_routines');
 
 /**
- * The POST request creates an entry in the database.
+ * The POST request creates entries in the database.
  * The POST will create, not update, an
  * entry in the database.
  * PUT should be used to update a database entry.
@@ -18,8 +18,21 @@ const routines = require('../../routines/http_routines');
  * @see putRoute
  */
 router.route(questionRoute).post(function(req, res) {
-  const db_entry = new db_admin(req.body);
-  routines.post_one(res, queries, db_entry);
+  var opt = req.body.option;
+  if (opt == null) opt = '1';
+  var docs = req.body.content;
+  switch (opt){
+    case '0':
+      routines.post_many(res, queries, db_admin, docs);
+      break;
+    case '1':
+      var db_entry = new db_admin(docs);
+      routines.post_one(res, queries, db_entry);
+      break;
+    default:
+        error_handler.badClientRequest(res, "Could not understand 'option' value");
+        break;
+  }
 });
 
 /**
@@ -34,9 +47,7 @@ router.route(questionRoute).post(function(req, res) {
 router.route(questionRoute).get(function(req, res) {
   var id = req.body.name;
   var opt = req.body.option;
-  if (opt == null){
-    opt = '1';
-  }
+  if (opt == null) opt = '1';
   switch (opt) {
     case '0':
       routines.get_all(res, queries, db_admin);
@@ -51,7 +62,6 @@ router.route(questionRoute).get(function(req, res) {
       break;
   }
 });
-
 
 /**
  * The PUT request is used to modify one entry in the database.

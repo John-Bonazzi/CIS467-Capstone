@@ -20,6 +20,22 @@ function postOneElement(newElement, callback){
   });
 }
 
+/**
+ * The query takes an array of documents to save in the database.
+ * The query runs the mongoose schema validators for each entry, and saves to the database all entries that pass the validators.
+ * The storing of the documents is done in bulk, with only one operation.
+ * If ordered = false, then the error will reports all the documents that have failed the validators. If true, stop the operation at the first document that fails the validators, not saving anything on the database.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema
+ * @param {json[]} newElementArr an array of populated Schema objects, each containing a document to save to the database.
+ * @callback callback callback to manage the response from the server
+ * @param {?bool} callback.err an error message, false if there is no error  
+ */
+function postManyElements(database, newElementArr, callback){
+  database.insertMany(newElementArr, {options: {ordered: false}}, function(err, docs){
+    callback(err);
+  });
+}
+
 /********************************************************
 * GET QUERIES
 ********************************************************/
@@ -119,6 +135,7 @@ function deleteAllElements(database, res){
 module.exports = {
   // POST QUERIES
   postOneElement: postOneElement,
+  postManyElements: postManyElements,
     
   // GET QUERIES
   getOneElement: getOneElement,
