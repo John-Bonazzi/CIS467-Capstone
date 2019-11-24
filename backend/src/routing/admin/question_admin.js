@@ -45,9 +45,9 @@ router.route(questionRoute).post(function(req, res) {
  * @param {Object} res the response from the server
  */
 router.route(questionRoute).get(function(req, res) {
-  var id = req.body.name;
-  var opt = req.body.option;
-  if (opt == null) opt = '1';
+  var id = req.query.name;
+  var opt = req.query.option;
+  if (opt == null && id != null) opt = '1';
   switch (opt) {
     case '0':
       routines.get_all(res, queries, db_admin);
@@ -92,11 +92,9 @@ router.route(questionRoute).put(function(req, res) {
  * @param {Object} res the response from the server
  */
 router.route(questionRoute).delete(function(req, res) {
-  var id = req.body.name;
-  var opt = req.body.option;
-  if (opt == null){
-    opt = '1';
-  }
+  var id = req.query.name;
+  var opt = req.query.option;
+  if (opt == null && id != null) opt = '1';
   switch (opt){
     case '0':
       routines.delete_all(res, queries, db_admin);
