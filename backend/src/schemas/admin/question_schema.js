@@ -34,7 +34,7 @@ const linkSchema = new Schema({
   },
   require: {
     type: [ObjectID],
-    required: true,
+    //required: true,
   },
   type: {
     type: String,

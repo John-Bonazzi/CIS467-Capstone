@@ -18,9 +18,9 @@ const routines = require('../../routines/http_routines');
  * @see putRoute
  */
 router.route(questionRoute).post(function(req, res) {
-  var opt = req.body.option;
+  var opt = req.query.option;
   if (opt == null) opt = '1';
-  var docs = req.body.content;
+  var docs = req.body;
   switch (opt){
     case '0':
       routines.post_many(res, queries, db_admin, docs);
