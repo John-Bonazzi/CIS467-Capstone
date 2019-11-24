@@ -9,12 +9,13 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
-/*
+/**
  * The body parser module is a middleware piece of software
  * that extracts the body portion of the request stream,
  * and can be accessed on req.body.
  * In short, it takes the body of a HTTP request
  * and make it readable.
+ * @const {Object}
  */
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * Unfortunately, most browser-webs ingore expires if there is a maxAge.
  * There is a choice to make: reset the session upon disconnection, or reset it upon inactivity.
  * Note that maxAge is highly recommended in most cases, while expire is an old standard.
+ * @name app_session
  */
 app.use(session({
   secret: 'capstone',
@@ -45,8 +47,10 @@ app.use('', router_user);
 // Connection string for the database connection.
 const database_agent = require('./config/keys');
 
-/*
+/**
  * Connect the server to the database to provide the service.
+ * @name mongoConnection
+ * @type {Function}
  */
 mongoose.connect(database_agent.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => console.log('Connection to the database established'),

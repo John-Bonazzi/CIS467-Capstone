@@ -142,9 +142,9 @@ function update_one(res, queryAgent, database, searchTerm, update){
  * While the actual definition of deleteOneElement is arbitrary, the routine should not be allowed to delete more than one element per function call.
  * For example, passing '{}' as search term should not delete all the collection, but only the first element.
  * @param {Object} res the Express res Object used to send back a response.
- * @param {module} queryAgent the module containing the queries to use
- * @param {mongoose.Schema} database the database as defined in a mongoose schema
- * @param {json} searchTerm JSON containing the terms used for the database search
+ * @param {module} queryAgent the module containing the queries to use.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json} searchTerm JSON containing the terms used for the database search.
  */
 function delete_one(res, queryAgent, database, searchTerm){
     try{
@@ -159,11 +159,33 @@ function delete_one(res, queryAgent, database, searchTerm){
 }
 
 /**
+ * Routine to delete field(s) from one element.
+ * Similar to delete_one, but acts on a field, not a document.
+ * @param {Object} res the Express res Object used to send back a response.
+ * @param {module} queryAgent the module containing the queries to use.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json} searchTerm JSON containing the terms used for the database search.
+ * @param {json} field JSON containing the fields and their values to find and delete.
+ * @see delete_one
+ */
+function delete_field_from_one(res, queryAgent, database, searchTerm, field){
+    try{
+        queryAgent.deleteField(database, searchTerm, field, function(err, element){
+            if(err) error_handler.badClientRequest(res, err);
+            else res.json("Field(s) succesfully deleted.");
+        });
+    }
+    catch(err){
+            error_handler.functionDoesNotExist(res, "The query agent does not have a deleteField function.");
+    }
+}
+
+/**
  * Routine to delete an entire collection.
  * Since this is a dangerous operation, the routine sends back to the client a backup of the deleted collection.
  * @param {Object} res the Express res Object used to send back a response.
- * @param {module} queryAgent the module containing the queries to use
- * @param {mongoose.Schema} database the database as defined in a mongoose schema
+ * @param {module} queryAgent the module containing the queries to use.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
  */
 function delete_all(res, queryAgent, database){
     try{
@@ -174,6 +196,28 @@ function delete_all(res, queryAgent, database){
     }
     catch(err){
             error_handler.functionDoesNotExist(res, "The query agent does not have a deleteOneElement function.");
+    }
+}
+
+/**
+ * Similar to delete_field_from_one, but it acts on the whole collection.
+ * This is useful if an entry in the database is removed, and you want to remove all references to that element from the collection.
+ * This acts on an entire collection.
+ * It does not allow to specify a subset of the collection to update.
+ * @param {Object} res the Express res Object used to send back a response.
+ * @param {module} queryAgent the module containing the queries to use.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json} field JSON containing the fields and their values to find and delete.
+ */
+function delete_field_from_all(res, queryAgent, database, field){
+    try{
+        queryAgent.deleteFieldFromAll(database, field, function(err, element){
+            if(err) error_handler.badClientRequest(res, err);
+            else res.json("Field(s) succesfully deleted.");
+        });
+    }
+    catch(err){
+            error_handler.functionDoesNotExist(res, "The query agent does not have a deleteFieldFromAll function.");
     }
 }
 
@@ -191,5 +235,7 @@ module.exports = {
     post_many: post_many,
     update_one: update_one,
     delete_one: delete_one,
+    delete_field_from_one: delete_field_from_one,
+    delete_field_from_all: delete_field_from_all,
     delete_all: delete_all
 }

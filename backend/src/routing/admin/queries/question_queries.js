@@ -124,6 +124,43 @@ function deleteOneElement(database, searchTerm, callback){
 }
 
 /**
+ * The query deletes the requested fields, or sub-documents, in a document.
+ * The field is a list of values: it is possible to remove multiple fields in one call.
+ * However, it is not possible to remove all the occurences of field from different documents in the collection.
+ * For that, see deleteFieldFromAll.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json} searchTerm JSON containing the terms used for the database search.
+ * @param {json} field A JSON containing the field(s) to remove.
+ * @callback callback callback to manage the response from the server.
+ * @param {?string} callback.e an error message, null if there is no error.
+ * @see deleteFieldFromAll
+ */
+function deleteField(database, searchTerm, field, callback){
+  var e = null;
+  database.updateOne(searchTerm, { $pullAll: field}, {runValidators: true}, function (err, element){
+    if (err) e = 'Could not delete the requested field(s) or sub-document(s)';
+    else callback(e);
+  });
+}
+
+/**
+ * Similar to deleteField, but applies the changes to all documents in the
+ * database.
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema.
+ * @param {json} field A JSON containing the field(s) to remove.
+ * @callback callback callback to manage the response from the server.
+ * @param {?string} callback.e an error message, null if there is no error.
+ * @see deleteField
+ */
+function deleteFieldFromAll(database, field, callback){
+  var e = null;
+  database.updateMany({}, { $pullAll: field}, {runValidators: true}, function (err, element){
+    if (err) e = 'Could not delete the requested field(s) or sub-document(s)';
+    else callback(e);
+  });
+}
+
+/**
  * The query is shorthand for deleting all elements in the database.
  * No search term has to be passed, as it defaults to any element (the empty set '{}').
  * The callback from the query returns, in this case, the whole collection.
@@ -155,5 +192,7 @@ module.exports = {
 
   //DELETE QUERIES
   deleteOneElement: deleteOneElement,
+  deleteField: deleteField,
+  deleteFieldFromAll: deleteFieldFromAll,
   deleteAllElements: deleteAllElements
 };
