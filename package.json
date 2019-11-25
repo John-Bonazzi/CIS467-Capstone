@@ -23,11 +23,13 @@
   },
   "homepage": "https://github.com/GionataB/CIS467-Capstone/wiki",
   "dependencies": {
+    "aws-sdk": "^2.579.0",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "mongoose": "^5.7.6",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "request": "^2.88.0"
   },
   "devDependencies": {},
   "engines": {
