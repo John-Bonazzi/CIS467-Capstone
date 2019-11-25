@@ -59,6 +59,34 @@ function get_one(res, queryAgent, database, searchTerm, selectTerm){
 }
 
 /**
+ * Routine to use when a single element is required from the database.
+ * This assumes that the queryAgent has a getOneElement function.
+ * @param {Object} req the Express req Object used by the client to send a request.
+ * @param {Object} res the Express res Object used to send back a response.
+ * @param {module} queryAgent the module containing the queries to use
+ * @param {mongoose.Schema} database the database as defined in a mongoose schema
+ * @param {json} searchTerm JSON containing the terms used for the database search
+ * @param {string} selectTerm the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.
+ * @param {boolean} close Tells the server to stop and wipe the session.
+ */
+function get_one_check_closure(req, res, queryAgent, database, searchTerm, selectTerm, close){
+    try{
+    queryAgent.getOneElement(database, searchTerm, selectTerm, function(err, element){
+        if(err) error_handler.badClientRequest(res, err);
+        else {
+            //req.session.history.push(searchTerm);
+            res.json(element);
+            if(close && element != null){
+                destroy_session(req);
+            }
+        }
+    });}
+    catch(err){
+        error_handler.functionDoesNotExist(res, "The query agent does not have a getOneElement function.");
+    }
+}
+
+/**
  * Routine to use when all the elements in the database are required.
  * @param {Object} res the Express res Object used to send back a response.
  * @param {module} queryAgent the module containing the queries to use.
@@ -230,6 +258,7 @@ function destroy_session(req){
 module.exports = {
     get_init: get_init,
     get_one: get_one,
+    get_one_check_closure: get_one_check_closure,
     get_all: get_all,
     post_one: post_one,
     post_many: post_many,
