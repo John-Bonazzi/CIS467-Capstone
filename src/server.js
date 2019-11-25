@@ -7,7 +7,7 @@ const router_user = require('./routing/user/router_user');
 
 const app = express();
 
-const PORT = process.env.PORT;
+var PORT = process.env.PORT;
 if(PORT == null || PORT == ""){
   PORT = 5000;
 }
