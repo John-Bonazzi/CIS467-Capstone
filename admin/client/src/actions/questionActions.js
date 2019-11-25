@@ -8,83 +8,13 @@ export const getQuestions = () => dispatch => {
 
     //get database path to database connector
     //then get 'name' from res.data
-
-
-    /*var d = {"option" : "0"};
-        //let b = JSON ({"option" : "0"});
-        axios({
-            method : 'GET',
-
-            url : 'http://localhost:5000/admin',
-
-            headers: { 
-            'Content-Type': 'application/json' },
-            data: JSON.stringify(d),
-            json: true
-        }).then(res => {
-            console.log(res);
-            console.log(res.data);
-
-            const persons = res.data;
-            this.setState({ persons });
+ 
+        axios.get('http://localhost:5000/admin/question', {data: {option: '0'}, mode: "no-cors"})
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
         });
-
-        getCall();*/
-
-
-        axios({
-            method : 'get',
-            url : 'http://localhost:5000/admin',
-            headers: { 
-            'Content-Type': 'application/json' },
-            data: {option : "0"},
-            json: true
-        })
-        .then(res => {
-            console.log(res);
-            //console.log(res.data);
-            dispatch({
-                type: GET_QUESTIONS,
-                payload: [
-                    {
-                        "_id": "5dc510230007680b3e20ff79",
-                        "tag": "Initial",
-                        "question": "Initial element",
-                        "__v": 0,
-                        "answers": []
-                    },
-                    {
-                        "_id": "5dc511aa878f510b88cf0160",
-                        "tag": "test",
-                        "question": "test answer element",
-                        "answers": [
-                            {
-                                "body": "this is an answer connected to Initial",
-                                "link": "5dc510230007680b3e20ff79"
-                            }
-                        ],
-                        "__v": 0
-                    },
-                    {
-                        "_id": "5dc6f31eef0a2906f2d12f3d",
-                        "tag": "test2",
-                        "question": "Slack example!!",
-                        "answers": [
-                            {
-                                "body": "this is an answer connected to Initial",
-                                "link": "5dc510230007680b3e20ff79"
-                            },
-                            {
-                                "body": "this is an answer connected to test",
-                                "link": "5dc511aa878f510b88cf0160"
-                            }
-                        ],
-                        "__v": 0
-                    }
-                ]
-            })}
-        )
-        
 };
 
 //Post request to '/api/items' 

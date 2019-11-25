@@ -10,13 +10,17 @@ import {
     Input
 } from 'reactstrap';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { addQuestion } from '../actions/questionActions';
 
 
 class QuestionModal extends Component {
     state = {
         modal: false,
-        name: ''
+        question: '',
+        tag: '',
+        answer: []
+
     }
 
     toggle = () => {
@@ -33,12 +37,45 @@ class QuestionModal extends Component {
         e.preventDefault();
 
         const newQuestion = {
-            name: this.state.name
+            question: this.state.question,
+            tag: this.state.tag,
+            answer: this.state.answer
         }
 
         //Add question via addQuestion action
-        this.props.addQuestion(newQuestion);
+        //this.props.addQuestion(newQuestion);
+        alert('Add question here');
 
+        axios.post('http://localhost:5000/admin/question', {params:{option: '1', body: newQuestion}})
+        .then((response) => {
+            this.setState(
+                {
+                    questions: response.data,
+                    isLoading: false
+                },
+            console.log(response.data))
+        }, (error) => {
+            console.log(error);
+        });
+
+
+
+        /*{
+            "tag": "Initial",
+            "question": "Welcome to the Exploration bot experience!",
+            "answer":[
+                {
+                    "content":[{
+                        "body": "Start!"
+                    }],
+                    "link":[
+                        {
+                            "dbref": "5dc511aa878f510b88cf0160",
+                            "type": "Question"
+                    }]
+                }
+            ]
+        }*/
         //Close modal
         this.toggle();
     }
@@ -56,7 +93,6 @@ class QuestionModal extends Component {
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
-
                 >
                     <ModalHeader toggle={this.toggle}>Add to List</ModalHeader>
                     <ModalBody>
@@ -65,7 +101,7 @@ class QuestionModal extends Component {
                                 <Label for = "question">Question</Label>
                                 <Input
                                 type="text"
-                                name="name"
+                                name="question"
                                 id="question"
                                 placeholder="Add Question"
                                 onChange={this.onChange}
@@ -77,6 +113,15 @@ class QuestionModal extends Component {
                                 name="tag"
                                 id="tag"
                                 placeholder="Add Tag"
+                                onChange={this.onChange}
+                                >
+                                </Input>
+                                <Label for = "answer">Answer</Label>
+                                <Input
+                                type="text"
+                                name="answer"
+                                id="answer"
+                                placeholder="Add Answer (answer 1, answer 2, ...)"
                                 onChange={this.onChange}
                                 >
                                 </Input>
