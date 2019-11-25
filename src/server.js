@@ -4,6 +4,7 @@ const session = require('express-session');
 
 const router_admin = require('./routing/admin/question_admin');
 const router_user = require('./routing/user/router_user');
+const root = require('./routing/root_route');
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use(session({
 
 app.use('', router_admin);
 app.use('', router_user);
+app.use('', root);
 
 // Connection string for the database connection.
 const database_agent = require('./config/keys');

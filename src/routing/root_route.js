@@ -12,3 +12,5 @@ var message = "Server supporting GVSU CIS Project Capstone, CIS 467.\nAuthor: Jo
 router.route('/').get((req, res) =>{
     res.json(message);
 });
+
+module.exports = router;
