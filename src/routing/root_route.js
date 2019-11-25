@@ -22,7 +22,7 @@ var message = {
 router.route('/').get((req, res) =>{
     /*var s3 = new aws.S3();
     var params = {Bucket: S3_BUCKET, key: 'welcome.html'};*/
-    var address = `http://s3.amazonaws.com/${S3_BUCKET}/welcome.html`
+    var address = `https://capstonedocumentation.s3.us-east-2.amazonaws.com/welcome.html`
     request(address).pipe(res);
     //s3.getObject()
 });

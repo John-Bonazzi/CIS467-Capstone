@@ -4,3 +4,4 @@ node_modules/
 /.vscode
 /test files
 *.sh
+*.html
