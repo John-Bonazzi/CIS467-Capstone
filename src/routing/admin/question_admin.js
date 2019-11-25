@@ -74,9 +74,10 @@ router.route(questionRoute).get(function(req, res) {
  * @param {Object} res the response from the server
  */
 router.route(questionRoute).put(function(req, res) {
-  var id = req.body.name;
-  var update_param = {};
-  update_param[req.body.element] = req.body.update;
+  var id = req.query.name;
+  var update_param = req.body;
+  /*var update_param = {};
+  update_param[req.body.element] = req.body.update;*/
   routines.update_one(res, queries, db_admin, {tag: id}, update_param);
 });
 

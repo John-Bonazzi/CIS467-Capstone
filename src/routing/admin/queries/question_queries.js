@@ -12,7 +12,6 @@
  */
 function postOneElement(newElement, callback){
   var e = null;
-  console.log(newElement);
   newElement.save(function(err){
     if (err) {
       //console.log(err);

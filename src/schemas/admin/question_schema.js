@@ -88,7 +88,7 @@ const QuestionSchema = new Schema({
     required: true,
   }
 }, {
-  collection: 'SCIS',
+  collection: 'SCIS - Questions',
 });
 
 module.exports = mongoose.model('question_schema', QuestionSchema);
