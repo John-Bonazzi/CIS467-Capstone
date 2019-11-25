@@ -91,4 +91,4 @@ const QuestionSchema = new Schema({
   collection: 'SCIS',
 });
 
-module.exports = mongoose.model('schema', QuestionSchema);
+module.exports = mongoose.model('question_schema', QuestionSchema);

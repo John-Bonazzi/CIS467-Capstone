@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 
-const router_admin = require('./routing/admin/question_admin');
+const router_admin_question = require('./routing/admin/question_admin');
+const router_admin_course = require('./routing/admin/course_admin');
 const router_user = require('./routing/user/router_user');
 const root = require('./routing/root_route');
 
@@ -45,7 +46,8 @@ app.use(session({
   }
 }));
 
-app.use('', router_admin);
+app.use('', router_admin_question);
+app.use('', router_admin_course);
 app.use('', router_user);
 app.use('', root);
 
