@@ -7,7 +7,7 @@ const router_user = require('./routing/user/router_user');
 
 const app = express();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 80;
 
 /**
  * The body parser module is a middleware piece of software
