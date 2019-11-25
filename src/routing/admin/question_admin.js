@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const db_admin = require('../../schemas/admin/question_schema');
-const {questionRoute} = require('./routes');
+const {questionRoute} = require('../../config/routes');
 const queries = require('./queries/question_queries');
 const routines = require('../../routines/http_routines');
 

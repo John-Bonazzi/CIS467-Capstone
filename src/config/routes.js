@@ -5,5 +5,7 @@
  * @type {json}
  */
 module.exports = {
-    questionRoute: '/admin/question'
+    questionRoute: '/admin/question',
+    courseRoute: '/admin/course',
+    userRoute: '/user'
 };
