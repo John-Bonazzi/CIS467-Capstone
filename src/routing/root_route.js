@@ -1,30 +1,50 @@
+/**
+ * The module contains the root route for the server.
+ * The route is used to display a web page with server documentation.
+ * @module routing/root_route
+ * @requires express
+ * @requires request
+ * @requires aws-sdk
+ */
+
 const express = require('express');
 const router = express.Router();
-const aws = require('aws-sdk');
 const request = require('request');
+const aws = require('aws-sdk');
+const path = require('path');
+
 aws.config.region = 'us-east-2';
 
-const S3_BUCKET = process.env.S3_BUCKET;
-
-var message = {
-    about: "Server supporting GVSU CIS Project Capstone, CIS 467.",
-    Author: "John Bonazzi",
-    Version: 0.9,
-    GitHub: "https://github.com/GionataB/CIS467-Capstone"
-};
-
 /**
- * Display info about the server.
+ * Display documentation about the server.
  * @name rootRoute
  * @param {Object} req the request received from a client
  * @param {Object} res the response from the server
  */
-router.route('/').get((req, res) =>{
-    /*var s3 = new aws.S3();
-    var params = {Bucket: S3_BUCKET, key: 'welcome.html'};*/
-    var address = `https://capstonedocumentation.s3.us-east-2.amazonaws.com/welcome.html`
-    request(address).pipe(res);
-    //s3.getObject()
+router.route('/*').get((req, res) =>{
+    var url = req.originalUrl;
+    if(url === '/') url = "index.html";
+    res.sendFile(url, {
+        root: path.join(__dirname, '../../out'),
+    });
+    /*const s3 = new aws.S3();
+    const s3Params = {
+        Bucket: S3_BUCKET,
+        Key: "index.html",
+    };
+    s3.getSignedUrl('getObject', s3Params, (err, data) =>{
+        if(err){
+            console.log(err);
+            res.status(400).end(); 
+        }
+        else{
+            res.writeHead
+        }
+    });*/
+    /*var url = req.originalUrl;
+    if(url === '/') url = "index.html";
+    var address = `https://capstonedocumentation.s3.us-east-2.amazonaws.com/out/${url}`
+    request(address).pipe(res);*/
 });
 
 module.exports = router;

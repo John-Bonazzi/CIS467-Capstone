@@ -5,7 +5,7 @@
  * the routines decide how to handle the data requested.
  * Routines can do data manipulation, while queries should not do any work on the data, but provide an easy to use abstraction of the syntax and options, with documentations, for some of the harder mongoose queries.
  * @module routines/http_routines
- * @requires src/error_handling/Error
+ * @requires error_handling/Error
  */
 
 const error_handler = require('../error_handling/Error');

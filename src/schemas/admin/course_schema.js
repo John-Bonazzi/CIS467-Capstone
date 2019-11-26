@@ -1,3 +1,9 @@
+/**
+ * The module contains the definition of a schema for the database element 'course'.
+ * @module schemas/admin/course_schema
+ * @requires mongoose
+ */
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 mongoose.set('useCreateIndex', true);

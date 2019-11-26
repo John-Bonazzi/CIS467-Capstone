@@ -1,3 +1,17 @@
+/**
+ * The Core of the server.
+ * The module starts up the server and attaches all the different modules together.
+ * @module server
+ * @requires express
+ * @requires mongoose
+ * @requires express-session
+ * @requires routing/admin/question_admin
+ * @requires routing/admin/course_admin
+ * @requires routing/user/router_user
+ * @requires routing/root_route
+ * @requires body-parser
+ */
+
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');

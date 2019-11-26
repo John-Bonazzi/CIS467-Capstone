@@ -1,3 +1,15 @@
+/**
+ * The module provides definitions for all REST requests and routes that handle the admin side of the server.
+ * The routes contained in the module connect to a specific collection of the database that stores 'questions'.
+ * @module routing/admin/question_admin
+ * @requires error_handling/Error
+ * @requires express
+ * @requires schemas/admin/question_schema
+ * @requires config/routes
+ * @requires routing/admin/queries/question_queries
+ * @requires routines/http_routines
+ */
+
 const error_handler = require('../../error_handling/Error');
 const express = require('express');
 const router = express.Router();

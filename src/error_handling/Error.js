@@ -1,4 +1,10 @@
 /**
+ * The module contains defines a variety of errors that could be encountered by the server.
+ * It also offers proper error status code report.
+ * @module error_handling/Error
+ */
+
+/**
  * An error used when there is a problem in the console output when testing.
  * For example, if an element is not present in a JSON file, this error would help identify the missing value.
  * @param {*} id the value that threw the error. 

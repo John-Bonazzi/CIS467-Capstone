@@ -1,3 +1,9 @@
+/**
+ * The module contains the definition of a schema for the database element 'question'.
+ * @module schemas/admin/question_schema
+ * @requires mongoose
+ */
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var ObjectID = mongoose.Schema.Types.ObjectId;

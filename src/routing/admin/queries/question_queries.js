@@ -1,3 +1,9 @@
+/**
+ * The module contains a set of provided short hand mongoose query calls.
+ * The queries provided should be used by the admin side of the front-end.
+ * @module routing/admin/queries/question_queries
+ */
+
 /********************************************************
 * POST QUERIES
 ********************************************************/

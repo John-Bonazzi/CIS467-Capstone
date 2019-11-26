@@ -1,10 +1,23 @@
+/**
+ * The module contains a set of provided short hand mongoose query calls.
+ * The queries provided should be used by the user side of the front-end.
+ * @module routing/user/router_user
+ * @requires error_handling/Error
+ * @requires express
+ * @requires schemas/admin/question_schema
+ * @requires schemas/admin/course_schema
+ * @requires config/routes
+ * @requires routing/user/queries/queries
+ * @requires routines/http_routines
+ */
+
 const error_handler = require('../../error_handling/Error');
 const express = require('express');
 const router = express.Router();
 
 const db_user_question = require('../../schemas/admin/question_schema');
 const db_user_course = require('../../schemas/admin/course_schema');
-const db_user_entry = require('../../schemas/user_schema');
+const {userRoute} = require('../../config/routes');
 const queries = require('./queries/queries');
 const routines = require('../../routines/http_routines');
 
@@ -53,6 +66,6 @@ function cb(req, res){
   }
 }
 
-router.route('/user').get(cb);
+router.route(userRoute).get(cb);
 
 module.exports = router;
