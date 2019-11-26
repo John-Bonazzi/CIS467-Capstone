@@ -27,7 +27,7 @@ router.route('/*').get((req, res) =>{
     res.sendFile(url, {
         root: path.join(__dirname, '../../out'),
     });*/
-    const s3 = new aws.S3();
+    /*const s3 = new aws.S3();
     var url = req.originalUrl;
     if(url === '/') url = "index.html";
     const s3Params = {
@@ -43,11 +43,11 @@ router.route('/*').get((req, res) =>{
             res.writeHead("200", {'Content-type': 'text/html'});
             res.write(data.Body);
         }
-    });
-    /*var url = req.originalUrl;
+    });*/
+    var url = req.originalUrl;
     if(url === '/') url = "index.html";
     var address = `https://capstonedocumentation.s3.us-east-2.amazonaws.com/out/${url}`
-    request(address).pipe(res);*/
+    res.redirect(address);//.pipe(res);
 });
 
 module.exports = router;
