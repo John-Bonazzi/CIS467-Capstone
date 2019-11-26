@@ -22,25 +22,28 @@ aws.config.region = 'us-east-2';
  * @param {Object} res the response from the server
  */
 router.route('/*').get((req, res) =>{
-    var url = req.originalUrl;
+    /*var url = req.originalUrl;
     if(url === '/') url = "index.html";
     res.sendFile(url, {
         root: path.join(__dirname, '../../out'),
-    });
-    /*const s3 = new aws.S3();
+    });*/
+    const s3 = new aws.S3();
+    var url = req.originalUrl;
+    if(url === '/') url = "index.html";
     const s3Params = {
         Bucket: S3_BUCKET,
-        Key: "index.html",
+        Key: url,
     };
-    s3.getSignedUrl('getObject', s3Params, (err, data) =>{
+    s3.getObject(s3Params, (err, data) =>{
         if(err){
             console.log(err);
             res.status(400).end(); 
         }
         else{
-            res.writeHead
+            res.writeHead("200", {'Content-type': 'text/html'});
+            res.write(data.Body);
         }
-    });*/
+    });
     /*var url = req.originalUrl;
     if(url === '/') url = "index.html";
     var address = `https://capstonedocumentation.s3.us-east-2.amazonaws.com/out/${url}`
