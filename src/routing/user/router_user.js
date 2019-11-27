@@ -29,7 +29,7 @@ const routines = require('../../routines/http_routines');
  * @param {Object} req the http request
  * @param {Object} res the http response
  */
-function cb(req, res){
+function cb_get(req, res){
   var returningUser = req.session.returning;
   if (returningUser) {
     var close = false;
@@ -66,6 +66,21 @@ function cb(req, res){
   }
 }
 
-router.route(userRoute).get(cb);
+/**
+ * Callback function to store the selected answers with the rest of the history.
+ * At the end, it sends back a response with the full history array.
+ * @param {Object} req the http request
+ * @param {Object} res the http response
+ */
+function cb_post(req, res){
+  var data = req.body.data;
+  routines.log_data(req.session.history, data, () =>{
+    res.status(201).json(req.session.history);
+  });
+}
+
+router.route(userRoute).get(cb_get);
+
+router.route(userRoute).post(cb_post);
 
 module.exports = router;

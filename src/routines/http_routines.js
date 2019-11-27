@@ -114,7 +114,7 @@ function post_one(res, queryAgent, newElement){
     try{
         queryAgent.postOneElement(newElement, function(err){
             if (err) error_handler.badServerHandler(res, 'Unable to save to database.');
-            else res.json('Entry added successfully.');
+            else res.status(201).json('Entry added successfully.');
         });
     }
     catch(err){
@@ -133,12 +133,23 @@ function post_many(res, queryAgent, database, elementsArr){
     try{
         queryAgent.postManyElements(database, elementsArr, function(err){
             if (err) error_handler.validationError(res, err);
-            else res.json("All documents successfully saved");
+            else res.status(201).json("All documents successfully saved");
         });
     }
     catch(err){
         error_handler.functionDoesNotExist(res, "The query agent does not have a postManyElements function."); 
     }
+}
+
+/**
+ * Routine to append the array contained in data to the storage in memory.
+ * @param {string[]} memory memory for storing data.
+ * @param {string[]} data the data to be stored.
+ * @callback callback function to do something after logging the data.
+ */
+function log_data(memory, data, callback){
+    memory.concat(data);
+    callback();
 }
 
 /**
@@ -249,7 +260,10 @@ function delete_field_from_all(res, queryAgent, database, field){
     }
 }
 
-//FIXME: working on this.
+/**
+ * Routine to wipe a session and restart with a clean cookie.
+ * @param {Object} req the Express req Object that contains the session storage.
+ */
 function destroy_session(req){
     req.session.destroy(function (err){
         if (err) error_handler.logError('Could not destroy the session.');
@@ -262,6 +276,7 @@ module.exports = {
     get_all: get_all,
     post_one: post_one,
     post_many: post_many,
+    log_data: log_data,
     update_one: update_one,
     delete_one: delete_one,
     delete_field_from_one: delete_field_from_one,
