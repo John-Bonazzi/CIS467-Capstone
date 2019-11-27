@@ -146,10 +146,11 @@ function post_many(res, queryAgent, database, elementsArr){
  * @param {string[]} memory memory for storing data.
  * @param {string[]} data the data to be stored.
  * @callback callback function to do something after logging the data.
+ * @param {string[]} callback.result the resulting concatenated array.
  */
 function log_data(memory, data, callback){
-    memory.concat(data);
-    callback();
+    result = memory.concat(data);
+    callback(result);
 }
 
 /**

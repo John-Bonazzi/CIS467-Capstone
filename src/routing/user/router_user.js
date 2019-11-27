@@ -73,8 +73,9 @@ function cb_get(req, res){
  * @param {Object} res the http response
  */
 function cb_post(req, res){
-  var data = req.body.data;
-  routines.log_data(req.session.history, data, () =>{
+  var data = req.body;
+  routines.log_data(req.session.history, data, result =>{
+    req.session.history = result;
     res.status(201).json(req.session.history);
   });
 }
