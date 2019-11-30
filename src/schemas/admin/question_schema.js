@@ -67,7 +67,7 @@ const answerSchema = new Schema({
     type: [linkSchema],
     required: true,
   },
-}, { _id: false });
+});
 
 /**
  *  Create the parent schema;
