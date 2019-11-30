@@ -36,7 +36,6 @@ const contentSchema = new Schema({
 const linkSchema = new Schema({
   dbref: {
     type: ObjectID,
-    unique: true,
     required: true,
   },
   require: {
@@ -84,6 +83,7 @@ const QuestionSchema = new Schema({
   tag: {
     type: String,
     required: true,
+    unique: true,
     index: true, // Make the tag a secondary index, which is unique and is queried faster.
   },
   question: {

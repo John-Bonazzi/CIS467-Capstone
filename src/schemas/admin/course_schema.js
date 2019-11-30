@@ -21,6 +21,7 @@ const CourseSchema = new Schema({
     tag: {
         type: String,
         required: true,
+        unique: true,
         index: true
     },
     description: String,
