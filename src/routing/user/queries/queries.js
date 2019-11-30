@@ -21,9 +21,9 @@
  * @param {?string} callback.e an error message, null if there is no error
  * @param {json} callback.element the database element returned by the query.
  */
-function getInitElement(database, tag, selectTerm, callback){
+function getOneElement(database, tag, selectTerm, callback){
     var e = null;
-    database.findOne(tag, selectTerm,function(err, element){
+    database.findOne(tag, selectTerm, function(err, element){
         if (err) e = 'Unable to find element';
         callback(e, element);
     });
@@ -38,7 +38,7 @@ function getInitElement(database, tag, selectTerm, callback){
  * @param {?string} callback.e an error message, null if there is no error
  * @param {json} callback.element the database element returned by the query.
  */
-function getOneElement(database, id, selectTerm, callback){
+function getOneElementById(database, id, selectTerm, callback){
     var e = null;
     database.findById(id, selectTerm, function(err, element){
         if (err) e = 'Unable to find element';
@@ -47,6 +47,6 @@ function getOneElement(database, id, selectTerm, callback){
 }
 
 module.exports = {
-    getInitElement: getInitElement,
-    getOneElement: getOneElement
+    getOneElement: getOneElement,
+    getOneElementById: getOneElementById
 }

@@ -25,7 +25,7 @@ const error_handler = require('../error_handling/Error');
  */
 function get_init(req, res, queryAgent, database, searchTerm, selectTerm){
     try{
-    queryAgent.getInitElement(database, searchTerm, selectTerm, function(err, element){
+    queryAgent.getOneElement(database, searchTerm, selectTerm, function(err, element){
        if (err) error_handler.badServerHandler(res, err);
        else {
            req.session.lastLink = element._id;

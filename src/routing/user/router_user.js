@@ -56,7 +56,7 @@ function cb_get(req, res){
         break;
     }
     if(run){
-      routines.get_one_check_closure(req, res, queries, database, link, '', close);
+      routines.get_one_check_closure(req, res, queries, database, {tag: link}, '', close);
     }
   }
   else {

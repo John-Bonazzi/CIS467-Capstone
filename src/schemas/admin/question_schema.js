@@ -35,7 +35,7 @@ const contentSchema = new Schema({
  */
 const linkSchema = new Schema({
   dbref: {
-    type: ObjectID,
+    type: String,
     required: true,
   },
   require: {
