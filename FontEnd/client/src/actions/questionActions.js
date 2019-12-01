@@ -8,12 +8,17 @@ export const getQuestions = () => dispatch => {
 
     //get database path to database connector
     //then get 'name' from res.data
+
     axios
-        .get ('/api/questions')
+        .get ('https://nameless-depths-96465.herokuapp.com/user',
+        {params: {
+            newlink: '5ddc11b3da133e07a9b90555', 
+            type: 'Course'
+        }})
         .then(res => 
             dispatch({
                 type: GET_QUESTIONS,
-                payload: res.data
+                payload: [res.data]
             })
         )
 };

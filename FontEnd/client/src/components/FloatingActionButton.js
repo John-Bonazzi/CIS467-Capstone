@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 import { Container, Button, Link } from 'react-floating-action-button'
-import ChatModal from './ChatModal';
 
 class FloatingActionButton extends Component {
     render() {
         return(
             <div>
                 <Container>
-                    <ChatModal/>
-                    <Button
-                        tooltip="Click Here To Chat!"
-                        styles={{backgroundColor: "#0095ff"}}
-                        icon=""
-                        rotate={true}
-                        onClick={ChatModal.toggle}>
-                    </Button>
-                </Container>
+            <Link href="#"
+                tooltip="Create note link"
+                icon="far fa-sticky-note" />
+            <Link href="#"
+                tooltip="Add user link"
+                icon="fas fa-user-plus" />
+                className="fab-item btn btn-link btn-lg text-white"
+            <Button
+                tooltip="The big plus button!"
+                icon="fas fa-plus"
+                rotate={true}
+                onClick={() => alert('FAB Rocks!')} />
+        </Container>
             </div>
         );
     }

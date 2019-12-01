@@ -26,33 +26,56 @@
 }
 
 .chat-modal-body {
-    height: 600px;
+    height: 500px;
+    width: 400px;
 }
 
-.mt-s {
+.answerButtons {
+    width: 95%;
     margin-top: 0.25rem !important;
+    margin-right: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
 }
 
-.bot {
+.answers {
     position: absolute;
-    bottom: 4rem;
+    bottom: 20%;
 }
 
-.pBot {
+.progressBar {
     position: absolute;
-    bottom: 2rem;
+    bottom: 12%;
     width: 95%;
 }
 
 .nBot {
     position: absolute;
-    bottom: 20%;
+    bottom: 30%;
     width: 25%;
     margin-left: 70%;
 }
 
 .nBotAlt {
     position: absolute;
-    bottom: 20%;
+    bottom: 2%;
+    width: 95%;
+}
+
+.modal-container {
+    bottom: 9vh !important;
+    position: fixed !important; 
+    margin: 1em !important;
+    right: 7vw !important;
+}
+
+.icon-css {
+    bottom: 10vh !important;
+    position: fixed !important; 
+    margin: 1em !important;
+    right: 8vw !important;
+}
+
+.card-witdth{
+    position: center;
     width: 95%;
 }

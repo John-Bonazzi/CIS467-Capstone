@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getQuestions, deleteQuestion } from '../actions/questionActions';
+import { getQuestions } from '../actions/questionActions';
 import PropTypes from 'prop-types';
 
 class OneQuestion extends Component {
 
     componentDidMount() {
         this.props.getQuestions();
-    }
-
-    onDeleteClick = (_id) => {
-        this.props.deleteQuestion(_id);
     }
 
     render() {
@@ -27,10 +23,10 @@ class OneQuestion extends Component {
                         MongoDB uses "_id" instead of "id"
                         */
                         }
-                        {questions.map(({_id, name}) => 
+                        {questions.map(({_id, question}) => 
                             <CSSTransition key={_id} timeout={500} classNames="fade">
                                 <ListGroupItem>
-                                    {name}
+                                    {question}
                                 </ListGroupItem>
                             </CSSTransition>
                         )}
@@ -50,7 +46,4 @@ const mapStateToProps = (state) => ({
     question: state.question
 });
 
-export default connect(
-    mapStateToProps, 
-    { getQuestions, deleteQuestion }
-    )(OneQuestion);
+export default connect(mapStateToProps, {getQuestions})(OneQuestion);

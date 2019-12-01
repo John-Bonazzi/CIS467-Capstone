@@ -27,7 +27,7 @@ class QuestionList extends Component {
                         //MongoDB uses "_id" instead of "id"
                         */
                         }
-                        {questions.map(({_id, name}) => 
+                        {questions.map(({_id, question}) => 
                             <CSSTransition key={_id} timeout={500} classNames="fade">
                                 <ListGroupItem>
                                     <Button
@@ -38,7 +38,7 @@ class QuestionList extends Component {
                                     >
                                         &times;
                                     </Button>
-                                    {name}
+                                    {question}
                                 </ListGroupItem>
                             </CSSTransition>
                         )}

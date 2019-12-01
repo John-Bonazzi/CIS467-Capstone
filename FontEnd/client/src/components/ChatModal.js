@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import {
-    Button,
     Modal,
     ModalHeader,
     ModalBody,
     Form,
     FormGroup,
-    Label,
-    Input
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import { addQuestion } from '../actions/questionActions';
 import OneQuestion from './OneQuestion';
 import Answers from './Answers';
 import { Container } from 'react-floating-action-button';
 import { Button as FAB } from 'react-floating-action-button';
-import { FaDiscourse } from 'react-icons/fa';
+import { getQuestions } from '../actions/questionActions';
+import PropTypes from 'prop-types';
 
 
 class ChatModal extends Component {
+
+    componentDidMount(){
+        this.props.getQuestions();
+    }
+
     state = {
         modal: false,
         name: ''
@@ -27,7 +29,7 @@ class ChatModal extends Component {
     toggle = () => {
         this.setState({
             modal: !this.state.modal
-        })
+        });
     }
 
     onChange = (e) => {
@@ -55,16 +57,18 @@ class ChatModal extends Component {
                 <FAB
                         tooltip="Click Here To Chat!"
                         styles={{backgroundColor: "#0095ff"}}
-                        icon= {FaDiscourse}
+                        icon= "FaDiscourse"
                         rotate={true}
                         onClick={this.toggle}>
                 </FAB>
                 </Container>
                 <Modal
+                    className="modal-container"
                     isOpen={this.state.modal}
                     toggle={this.toggle}
+                    backdrop={false}
                 >
-                    <ModalHeader toggle={this.toggle}>Grand Valley CIS</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>Exploration Bot</ModalHeader>
                     <ModalBody className = "chat-modal-body">
                         <Form onSubmit={this.onSubmit}>
                             <FormGroup>
@@ -79,8 +83,13 @@ class ChatModal extends Component {
     }
 }
 
+ChatModal.propTypes = {
+    getQuestions: PropTypes.func.isRequired,
+    question: PropTypes.object.isRequired
+}
+
 const mapStateToProps = state => ({
     question: state.question
 });
 
-export default connect(mapStateToProps, {addQuestion})(ChatModal);
+export default connect(mapStateToProps, {getQuestions})(ChatModal);
