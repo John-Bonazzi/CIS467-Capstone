@@ -61,6 +61,7 @@ function cb_get(req, res){
   }
   else {
     routines.get_init(req, res, queries, db_user_question, {tag: 'Initial'}, '');
+    //Setting up session storage.
     req.session.returning = true;
     req.session.history = [];
   }

@@ -10,16 +10,15 @@
 
 /**
  * The query looks for the element with the given tag.
- * It differs from getOneElement because this query gets
- * the current element, not the linked element.
- * This should be used to start a connection between a user and
- * the server.
+ * This should be used for all communication with the server.
+ * However, if there is a need to query the database by the _id, see getOneElementById
  * @param {mongoose.Schema} database the database as defined in a mongoose schema 
  * @param {json} tag the tag is the search term used for the query, an arbitrary value used to start the whole chatbot.
  * @param {string} selectTerm the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.
  * @callback callback callback to manage the response from the server
  * @param {?string} callback.e an error message, null if there is no error
  * @param {json} callback.element the database element returned by the query.
+ * @see getOneElementById
  */
 function getOneElement(database, tag, selectTerm, callback){
     var e = null;

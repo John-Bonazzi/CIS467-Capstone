@@ -15,20 +15,24 @@ mongoose.set('useCreateIndex', true);
  * It is used to enable multiple-choice answers.
  * This way, it is possible to select multiple answers (and store them for example), but still proceed to the next question.
  * - body: contains the answer to be displayed.
- * - _id: ObjectId that can be stored. (field not showed in the code).
+ * - id: String that can be stored, similar to the tag.
  * @const {mongoose.Schema}
  */
 const contentSchema = new Schema({
+  id: {
+    type: String,
+    required: true
+  },
   body: {
     type: String,
-    required: true,
+    required: true
   }
 });
 
 /**
  * The linkSchema is a child schema for answerSchema.
  * It is used to be able to reference elements in the database, and their collection.
- * - dbref: the ObjectID of the referenced element
+ * - dbref: the tag of the referenced element
  * - require: an array of ObjectIDs. This can be used in the front-end to set limitations, for example compare the list of saved answers (their content's _id) with the array, and if all elements in the array appear at least once in the saved list, then accept the answer and follow the link.
  * - type: a String that contains a keyword to reference a collection, and its mongoose.Schema. For example, at the end of the whole exploration bot execution, something else that is not a question is displaied; that will be stored in a different collection, using a different schema.
  * @const {mongoose.Schema}
@@ -39,7 +43,7 @@ const linkSchema = new Schema({
     required: true,
   },
   require: {
-    type: [ObjectID],
+    type: [String],
     //required: true,
   },
   type: {

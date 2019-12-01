@@ -57,18 +57,16 @@ router.route(questionRoute).post(function(req, res) {
  * @param {Object} res the response from the server
  */
 router.route(questionRoute).get(function(req, res) {
-  var id = req.query.name;
+  var name = req.query.name;
   var opt = req.query.option;
-  if (opt == null && id != null) opt = '1';
+  if (opt == null && name != null) opt = '1';
   switch (opt) {
     case '0':
       routines.get_all(res, queries, db_admin);
       break;
-    
     case '1':
-      routines.get_one(res, queries, db_admin, {tag: id}, '');
+      routines.get_one(res, queries, db_admin, {tag: name}, '');
       break;
-
     default:
       error_handler.badClientRequest(res, "Could not understand 'option' value");
       break;
