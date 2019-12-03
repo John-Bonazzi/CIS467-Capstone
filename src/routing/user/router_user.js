@@ -31,7 +31,9 @@ const routines = require('../../routines/http_routines');
  */
 function cb_get(req, res){
   var returningUser = req.session.returning;
-  if (returningUser) {
+  var cookies = req.query.cookies;
+  if(cookies == null) cookies = false;
+  if (returningUser || !cookies) {
     var close = false;
     var run = true;
     var link = req.query.newlink;
@@ -51,7 +53,7 @@ function cb_get(req, res){
         break;
 
       default:
-        error_handler.badClientRequest(`Type ${type} does not exist.`);
+        error_handler.badClientRequest(res, `Type ${type} does not exist.`);
         run = false;
         break;
     }
