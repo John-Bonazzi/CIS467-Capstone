@@ -18,6 +18,7 @@ class QuestionList extends Component {
     render() {
         //question is entire state object, questions is array inside state
         const { questions } = this.props.question;
+        const answers = [questions[0].answers[0].content[0]];
         return (
             <Container>
                 <ListGroup>
@@ -27,7 +28,7 @@ class QuestionList extends Component {
                         //MongoDB uses "_id" instead of "id"
                         */
                         }
-                        {questions.map(({_id, question}) => 
+                        {answers.map(({_id, body}) => 
                             <CSSTransition key={_id} timeout={500} classNames="fade">
                                 <ListGroupItem>
                                     <Button
@@ -38,7 +39,7 @@ class QuestionList extends Component {
                                     >
                                         &times;
                                     </Button>
-                                    {question}
+                                    {body}
                                 </ListGroupItem>
                             </CSSTransition>
                         )}

@@ -3,36 +3,79 @@ import { Container, Button, Progress } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getQuestions } from '../actions/questionActions';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import FinalCard from './FinalCard';
 
 class Answers extends Component {
     state = {
         val: [0]
     }
+
     
     step = () => {
-        this.setState({
-            val: [this.state.val[0] + 25]
-        })
+        const data = this.props.question;
+        const link = data.questions[0].answers[0].link[0].dbref;
+        const type = data.questions[0].answers[0].link[0].type;
+
+        if(this.state.val[0] >= 100){
+            //Is Complete
+        }
+        else{
+            //Update Progress Bar
+            this.setState({
+                val: [this.state.val[0] + 25]
+            })
+            //Call Next Question and get answers loaded into array
+            this.props.getQuestions(link, type);
+            this.createAnswers();
+        }
+    }
+
+    createAnswers(){
+        const ans = [];
+        const { questions } = this.props.question;
+        const content = questions[0].answers;
+        content.forEach(element => {
+            ans.push(element.content[0]);
+        });
+        return ans;
+    }
+
+    saveSelection(select){
+        const selections = [];
+        selections.push(select);
+        console.log("Selected Answers: ", selections);
     }
 
     render() {
         const { questions } = this.props.question;
-        const answers = [questions[0].answers[0].content[0]];
         const val = this.state.val;
         const barVal = [String(this.state.val)];
+        let ans = this.createAnswers();
+
         return (
             <div>
+            <Container>
+                <h2>{questions[0].question}</h2>
+            </Container>
             <Container className="answers">
             {
             //<FinalCard/>
             }
-                {answers.map(({_id, body}) => 
-                    <Button key={_id} outline color="primary" className="answerButtons">{body}</Button>
-                )}
-                <Button outline color="primary" className="answerButtons">No I have Not</Button>
-                    <Button outline color="primary" className="answerButtons">Yes I have</Button>
+
+            {ans.map(({_id, body}) =>
+                <CSSTransition key={_id} timeout={500} classNames="fade">
+                        <Button 
+                            key={_id} 
+                            outline color="primary" 
+                            className="answerButtons"
+                            onClick={this.saveSelection(body)}>
+                        {body}
+                        </Button>
+                </CSSTransition>
+            )} 
             </Container>
+
             <Container className="progressBar">
                 {val.map((value) =>
                     <div key="1" className="text-center">{value/25} /4</div>

@@ -10,6 +10,7 @@ import './App.css';
 class App extends Component {
   render() {
     return (
+      <div>
       <Provider store={store}>
         <div className="App">
           <Container>
@@ -17,6 +18,7 @@ class App extends Component {
           </Container>
         </div>
       </Provider>
+      </div>
     );
   }
 }

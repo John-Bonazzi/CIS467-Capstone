@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 class ChatModal extends Component {
 
     componentDidMount(){
-        this.props.getQuestions();
+        this.props.getQuestions("Initial", "Question");
     }
 
     state = {
@@ -30,6 +30,7 @@ class ChatModal extends Component {
         this.setState({
             modal: !this.state.modal
         });
+        this.props.getQuestions("Initial", "Question");
     }
 
     onChange = (e) => {
@@ -70,11 +71,6 @@ class ChatModal extends Component {
                 >
                     <ModalHeader toggle={this.toggle}>Exploration Bot</ModalHeader>
                     <ModalBody className = "chat-modal-body">
-                        <Form onSubmit={this.onSubmit}>
-                            <FormGroup>
-                                <OneQuestion/>
-                            </FormGroup>
-                        </Form>
                         <Answers/>
                     </ModalBody>
                 </Modal>
