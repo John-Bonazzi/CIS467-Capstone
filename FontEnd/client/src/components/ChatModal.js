@@ -13,6 +13,7 @@ import { Container } from 'react-floating-action-button';
 import { Button as FAB } from 'react-floating-action-button';
 import { getQuestions } from '../actions/questionActions';
 import PropTypes from 'prop-types';
+import Image from '../Icons/message.png';
 
 
 class ChatModal extends Component {
@@ -57,8 +58,8 @@ class ChatModal extends Component {
                 <Container>
                 <FAB
                         tooltip="Click Here To Chat!"
-                        styles={{backgroundColor: "#0095ff"}}
-                        icon= "FaDiscourse"
+                        styles={{backgroundColor: "#0e66a2"}}
+                        icon= "./Icons/message.png"
                         rotate={true}
                         onClick={this.toggle}>
                 </FAB>

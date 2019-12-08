@@ -86,7 +86,7 @@ class QuestionList extends Component {
                         //MongoDB uses "_id" instead of "id"
                         */
                         }
-                        {questions.map(({_id, tag}) => 
+                        {questions.map(({_id, tag, question}) => 
                             <CSSTransition key={_id} timeout={500} classNames="fade">
                                 <ListGroupItem>
                                     <Button
@@ -103,7 +103,7 @@ class QuestionList extends Component {
                                         size="sm"
                                         onClick={this.onInfoClick.bind(this, _id)}
                                     >
-                                        {tag}
+                                        {question}
                                     </Button>
                                     
                                 </ListGroupItem>

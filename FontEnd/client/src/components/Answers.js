@@ -8,43 +8,68 @@ import FinalCard from './FinalCard';
 
 class Answers extends Component {
     state = {
-        val: [0]
+        val: [0],
+        selections: [],
+        isOpen: false
     }
 
-    
-    step = () => {
-        const data = this.props.question;
-        const link = data.questions[0].answers[0].link[0].dbref;
-        const type = data.questions[0].answers[0].link[0].type;
+    showFinal(){
+        this.setState({
+            isOpen: true
+        });
+    }
 
-        if(this.state.val[0] >= 100){
-            //Is Complete
+    hideFinal(){
+        this.setState({
+            isOpen: false
+        });
+    }
+
+    step = (event) => {
+        const data = JSON.parse(event.target.value);
+        console.log("Event Val: ",data);
+        const link = data.dbref;
+        const type = data.type;
+        if(link === "Skill"){
+            //Initial Question
+            this.props.getQuestions(link, type);
+            console.log("GetQuestions: ", link, type);
+            this.createAnswers();
         }
-        else{
+        else if(type === "Question"){
             //Update Progress Bar
             this.setState({
                 val: [this.state.val[0] + 25]
             })
             //Call Next Question and get answers loaded into array
             this.props.getQuestions(link, type);
+            console.log("GetQuestions: ", link, type);
             this.createAnswers();
         }
+        else{
+            //Type = Course
+            this.setState({
+                val: [100]
+            })
+            this.props.getQuestions(link, type);
+            this.showFinal();
+            console.log("GetQuestions: ", link, "Course");
+            }
     }
 
     createAnswers(){
         const ans = [];
         const { questions } = this.props.question;
         const content = questions[0].answers;
-        content.forEach(element => {
-            ans.push(element.content[0]);
-        });
+        if(content == undefined){
+            console.log("Is course");
+        }
+        else{
+            content.forEach(element => {
+                ans.push(element);
+            });
+        }
         return ans;
-    }
-
-    saveSelection(select){
-        const selections = [];
-        selections.push(select);
-        console.log("Selected Answers: ", selections);
     }
 
     render() {
@@ -56,21 +81,21 @@ class Answers extends Component {
         return (
             <div>
             <Container>
-                <h2>{questions[0].question}</h2>
+                <h4>{questions[0].question}</h4>
+                {this.state.isOpen ?
+                    <FinalCard/>
+                : null}
             </Container>
             <Container className="answers">
-            {
-            //<FinalCard/>
-            }
-
-            {ans.map(({_id, body}) =>
-                <CSSTransition key={_id} timeout={500} classNames="fade">
+            {ans.map(({content, link}) =>
+                <CSSTransition key={content[0]._id} timeout={500} classNames="fade">
                         <Button 
-                            key={_id} 
+                            key={content[0]._id} 
                             outline color="primary" 
                             className="answerButtons"
-                            onClick={this.saveSelection(body)}>
-                        {body}
+                            onClick={this.step}
+                            value = {JSON.stringify(link[0])}>
+                        {content[0].body}
                         </Button>
                 </CSSTransition>
             )} 
@@ -81,20 +106,10 @@ class Answers extends Component {
                     <div key="1" className="text-center">{value/25} /4</div>
                 )}
                 {barVal.map((value) =>
-                    <Progress multi>
-                        <Progress bar animated value={value}></Progress>
+                    <Progress multi key="multi">
+                        <Progress key="bar" bar animated value={value}></Progress>
                     </Progress>
                 )}
-            </Container>
-            <Container className="nBotAlt">
-            <Button
-                color="dark"
-                style={{marginTop: '2rem'}}
-                onClick={this.step}
-                block
-                >
-                    Next
-            </Button>
             </Container>
             </div>
         );

@@ -10,13 +10,17 @@ import {
     Input
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import { addQuestion } from '../actions/questionActions';
+import axios from 'axios';
+//import { addQuestion } from '../actions/questionActions';
 
 
 class QuestionModal extends Component {
     state = {
         modal: false,
-        name: ''
+        question: '',
+        tag: '',
+        answer: [],
+        link: []
     }
 
     toggle = () => {
@@ -32,12 +36,50 @@ class QuestionModal extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        const newQuestion = {
-            name: this.state.name
+
+        let choices = this.state.answer.split(',');
+        let linkTypes = this.state.link.split(',');
+       let a = [];
+        for(let i = 0; i < choices.length; i++){
+
+            let diffLinks = linkTypes[i].split(":");
+
+            a[i] = 
+             {
+                content : 
+                {
+                    id: this.state.tag + " " + choices[i],
+                    body: choices[i]
+                },
+                link : {
+                    dbref: diffLinks[0],//.split(' ')[0],
+                    type: diffLinks[1]//.split(' ')[1]
+                }
+            }
+        }
+        
+
+        const q = {
+            tag: this.state.tag,
+            question: this.state.question,
+            answers: a
         }
 
-        //Add question via addQuestion action
-        this.props.addQuestion(newQuestion);
+        console.log(q);
+
+       axios({
+            method: 'post',
+            url: 'https://nameless-depths-96465.herokuapp.com/admin/question',
+            data: q
+        
+        })
+        .then((response) => {
+            this.setState(
+              
+            console.log(response.data))
+        }, (error) => {
+            console.log(error);
+        });
 
         //Close modal
         this.toggle();
@@ -56,7 +98,6 @@ class QuestionModal extends Component {
                 <Modal
                     isOpen={this.state.modal}
                     toggle={this.toggle}
-
                 >
                     <ModalHeader toggle={this.toggle}>Add to List</ModalHeader>
                     <ModalBody>
@@ -65,9 +106,36 @@ class QuestionModal extends Component {
                                 <Label for = "question">Question</Label>
                                 <Input
                                 type="text"
-                                name="name"
+                                name="question"
                                 id="question"
                                 placeholder="Add Question"
+                                onChange={this.onChange}
+                                >
+                                </Input>
+                                <Label for = "tag">Tag</Label>
+                                <Input
+                                type="text"
+                                name="tag"
+                                id="tag"
+                                placeholder="Add Tag"
+                                onChange={this.onChange}
+                                >
+                                </Input>
+                                <Label for = "answer">Answer</Label>
+                                <Input
+                                type="text"
+                                name="answer"
+                                id="answer"
+                                placeholder="Add Answer (a1,a2,a3, ...)"
+                                onChange={this.onChange}
+                                >
+                                </Input>
+                                <Label for = "link">Link</Label>
+                                <Input
+                                type="text"
+                                name="link"
+                                id="link"
+                                placeholder="Add Links (DBref1 Type1, DBref2 Type2, ...)"
                                 onChange={this.onChange}
                                 >
                                 </Input>
@@ -91,4 +159,4 @@ const mapStateToProps = state => ({
     question: state.question
 });
 
-export default connect(mapStateToProps, {addQuestion})(QuestionModal);
+export default connect(mapStateToProps)(QuestionModal);
