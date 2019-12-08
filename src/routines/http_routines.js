@@ -157,16 +157,15 @@ function log_data(memory, data, callback){
  * Routine to update one element. 
  * The routine updates a single field in an element.
  * Depending on the definition of updateOneElement, a new element, or field, can be created if it does not already exist. 
- * check the documentation of updateOneElement to make sure of its behavior.
  * @param {Object} res the Express res Object used to send back a response.
  * @param {module} queryAgent the module containing the queries to use
  * @param {mongoose.Schema} database the database as defined in a mongoose schema
  * @param {json} searchTerm JSON containing the terms used for the database search
  * @param {json} update JSON containing the field to update, and its new value
  */
-function update_one(res, queryAgent, database, searchTerm, update){
+function update_one_doc(res, queryAgent, database, searchTerm, update){
     try{
-        queryAgent.updateOneElement(database, searchTerm, update, function(err, element){
+        queryAgent.updateOneDocument(database, searchTerm, update, function(err, element){
             if (err) error_handler.badServerHandler(res, 'Unable to update the database.');
             else res.json(element);
         });
@@ -176,6 +175,18 @@ function update_one(res, queryAgent, database, searchTerm, update){
     }
 }
 
+function update_one_answer(res, queryAgent, database, searchTerm, field, fieldID, index, update){
+    try{
+        queryAgent.updateOneAnswer(database, searchTerm, field, fieldID, index, update, function(err, element){
+            if(err) error_handler.badServerHandler(res, 'Unable to update the answer');
+            else res.json(element);
+        });
+    }
+    catch(err){
+        console.log(err);
+        error_handler.functionDoesNotExist(res, "The query agent does not have an updateOneAnswerContent function."); 
+    }
+}
 /**
  * Routine to delete one element.
  * After deletion, the element is temporarily stored in 'element' (not used).
@@ -271,14 +282,22 @@ function destroy_session(req){
     });
 }
 module.exports = {
+    //GET
     get_init: get_init,
     get_one: get_one,
     get_one_check_closure: get_one_check_closure,
     get_all: get_all,
+
+    //POST
     post_one: post_one,
     post_many: post_many,
     log_data: log_data,
-    update_one: update_one,
+
+    //PUT
+    update_one_doc: update_one_doc,
+    update_one_answer: update_one_answer,
+
+    //DELETE
     delete_one: delete_one,
     delete_field_from_one: delete_field_from_one,
     delete_field_from_all: delete_field_from_all,

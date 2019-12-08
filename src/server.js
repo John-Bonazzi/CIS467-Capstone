@@ -23,10 +23,7 @@ const root = require('./routing/root_route');
 
 const app = express();
 
-var PORT = process.env.PORT;
-if(PORT == null || PORT == ""){
-  PORT = 5000;
-}
+var PORT = process.env.PORT || 5000;
 
 /**
  * The body parser module is a middleware piece of software

@@ -1,7 +1,7 @@
 /**
  * The module contains a set of provided short hand mongoose query calls.
  * The queries provided should be used by the admin side of the front-end.
- * @module routing/admin/queries/question_queries
+ * @module routing/admin/queries/admin_queries
  */
 
 /********************************************************
@@ -12,6 +12,7 @@
  * The query takes a database entry in the form of a mongoose Schema object, and inserts it into the database.
  * If an error occurs, 'e' will be set to true.
  * Generally, this means that the server was not able to save on the database, most of the time because another element with the same unique key is in the database.
+ * @name postOneElement
  * @param {mongoose.Schema} newElement a Schema object containing the entry to insert in the database 
  * @callback callback callback to manage the response from the server
  * @param {?bool} callback.e an error message, null if there is no error 
@@ -92,9 +93,12 @@ function getAllElements(database, callback){
 ********************************************************/
 
 /**
- * The query updates/adds a field, or more, in an existing element.
+ * The query updates a field at the top level of the document.
  * If an error occurs, 'e' will be set to true.
  * Generally, that means that the element was not found, or the update does not pass the database's constraints.
+ * This does not update a subdocument.
+ * If you want to modify a subdocument, like a field in one index in "answers", see updateOneAnswer.
+ * The operation is atomic and operates on the database without pulling the original element.
  * @param {mongoose.Schema} database the database as defined in a mongoose schema
  * @param {json} searchTerm JSON containing the terms used for the database search
  * @param {json} update JSON containing the field(s) to update/add
@@ -102,11 +106,23 @@ function getAllElements(database, callback){
  * @param {?string} callback.e an error message, null if there is no error
  * @param {json} callback.element the updated database element.
  */
-function updateOneElement(database, searchTerm, update, callback){
+function updateOneDocument(database, searchTerm, update, callback){
   var e = null;
-  database.findOneAndUpdate(searchTerm, update, {new: true, runValidators: true}, function(err, element) {
+  database.updateOne(searchTerm, update, {new: true, runValidators: true}, function(err, element) {
     if (err) e = 'Could not update element.';
     else callback(e, element);
+  });
+}
+
+function updateOneAnswer(database, searchTerm, field, fieldID, index, update, callback){
+  database.findOne(searchTerm, function(err, element){
+    var subDoc = element.answers[index][field].id(fieldID);
+    //console.log(subDoc); //Use this to see if the correct field is being pulled
+    subDoc.set(update);
+    element.save().then(function(elem){
+      callback(null, elem);})
+      .catch(function(error){
+        callback(error, null);});
   });
 }
 
@@ -197,7 +213,8 @@ module.exports = {
   getAllElements: getAllElements,
 
   // PUT QUERIES
-  updateOneElement: updateOneElement,
+  updateOneDocument: updateOneDocument,
+  updateOneAnswer: updateOneAnswer,
 
   //DELETE QUERIES
   deleteOneElement: deleteOneElement,

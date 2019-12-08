@@ -50,7 +50,7 @@ const linkSchema = new Schema({
     type: String,
     required: true
   },
-}, { _id: false});
+});
 
 /**
  * Create the child schema for the answer field.
