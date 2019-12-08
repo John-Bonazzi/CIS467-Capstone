@@ -1,98 +1,81 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 //import { render } from 'react-dom';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getQuestions, deleteQuestion } from '../actions/questionActions';
+//import { getQuestions, deleteQuestion } from '../actions/questionActions';
 import PropTypes from 'prop-types';
 //import { getCall } from './test';
 
+
 class QuestionList extends Component {
 
-    state = {
-        persons: []
-    }
+    constructor(props){
+        super(props);
+    this.state = {
+        questions: [],
+        isLoading: false,
+        error: null,
+        singleQuestion: []
+    };
+}
 
      componentDidMount() {
-        alert("Need to grab questions here");
 
-        /*var d = {"option" : "0"};
-        //let b = JSON ({"option" : "0"});
-        axios({
-            method : 'GET',
-
-            url : 'http://localhost:5000/admin',
-
-            headers: { 
-            'Content-Type': 'application/json' },
-            data: JSON.stringify(d),
-            json: true
-        }).then(res => {
-            console.log(res);
-            console.log(res.data);
-
-            const persons = res.data;
-            this.setState({ persons });
+        axios.get('https://nameless-depths-96465.herokuapp.com/admin/question', {params:{option: '0'}})
+        .then((response) => {
+            this.setState(
+                {
+                    questions: response.data,
+                    isLoading: false
+                },
+            console.log(response.data))
+        }, (error) => {
+            console.log(error);
         });
-
-        getCall();*/
-
-        this.props.getQuestions();
-
-       /*let allQuestions = [
-            {
-                "_id": "5dc510230007680b3e20ff79",
-                "tag": "Initial",
-                "question": "Initial element",
-                "__v": 0,
-                "answers": []
-            },
-            {
-                "_id": "5dc511aa878f510b88cf0160",
-                "tag": "test",
-                "question": "test answer element",
-                "answers": [
-                    {
-                        "body": "this is an answer connected to Initial",
-                        "link": "5dc510230007680b3e20ff79"
-                    }
-                ],
-                "__v": 0
-            },
-            {
-                "_id": "5dc6f31eef0a2906f2d12f3d",
-                "tag": "test2",
-                "question": "Slack example!!",
-                "answers": [
-                    {
-                        "body": "this is an answer connected to Initial",
-                        "link": "5dc510230007680b3e20ff79"
-                    },
-                    {
-                        "body": "this is an answer connected to test",
-                        "link": "5dc511aa878f510b88cf0160"
-                    }
-                ],
-                "__v": 0
-            }
-        ];*/
     }
 
-    onDeleteClick = (_id) => {
-        alert("Pressed Delete");
-        //this.props.deleteQuestion(_id);
+    onDeleteClick = (tag) => {
+        alert("Pressed Delete: " + tag);
+       
+        axios({
+            method: 'delete',
+            url: 'https://nameless-depths-96465.herokuapp.com/admin/question',
+            params: {option: '1', name: tag}
+        })
+        .then((response) => {
+            console.log(response.data)
+        }, (error) => {
+            console.log(error);
+        });
     }
 
     onInfoClick = (_id) => {
 
-        alert("Pressed More info click");
-        //this.props.getQuestions();
+        alert(_id);
+
+        /*axios.get('https://nameless-depths-96465.herokuapp.com/admin/question', {params:{option: '1', tag: _id}})
+        .then((response) => {
+            console.log(response);
+            this.setState(
+                {
+                    singleQuestion: response.data,
+                    isLoading: false
+                },
+            alert(this.props.singleQuestion))
+        }, (error) => {
+            console.log(error);
+        });*/
+
+        //const [qs, setQs]  = useState(0);
+        //alert(qs[0].id);
     }
 
     render() {
         //question is entire state object, questions is array inside state
-        const { questions } = this.props.question;
+        //const { questions } = this.props.question;
+        const {questions} = this.state;
 
         return (
             <Container>
@@ -110,7 +93,7 @@ class QuestionList extends Component {
                                         className="remove-btn"
                                         color="danger"
                                         size="sm"
-                                        onClick={this.onDeleteClick.bind(this, _id)}
+                                        onClick={this.onDeleteClick.bind(this, tag)}
                                     >
                                         &times;
                                     </Button>
@@ -133,16 +116,16 @@ class QuestionList extends Component {
     }
 }
 
-QuestionList.propTypes = {
+/*QuestionList.propTypes = {
     getQuestions: PropTypes.func.isRequired,
     question: PropTypes.object.isRequired
-}
+}*/
 
 const mapStateToProps = (state) => ({
     question: state.question
 });
 
 export default connect(
-    mapStateToProps, 
-    { getQuestions, deleteQuestion }
+    mapStateToProps
+    //{ getQuestions, deleteQuestion }
     )(QuestionList);
