@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { addQuestion } from '../actions/questionActions';
+//import { addQuestion } from '../actions/questionActions';
 
 
 class QuestionModal extends Component {
@@ -19,8 +19,8 @@ class QuestionModal extends Component {
         modal: false,
         question: '',
         tag: '',
-        answer: []
-
+        answer: [],
+        link: []
     }
 
     toggle = () => {
@@ -36,46 +36,51 @@ class QuestionModal extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        const newQuestion = {
-            question: this.state.question,
+
+        let choices = this.state.answer.split(',');
+        let linkTypes = this.state.link.split(',');
+       let a = [];
+        for(let i = 0; i < choices.length; i++){
+
+            let diffLinks = linkTypes[i].split(":");
+
+            a[i] = 
+             {
+                content : 
+                {
+                    id: this.state.tag + " " + choices[i],
+                    body: choices[i]
+                },
+                link : {
+                    dbref: diffLinks[0],//.split(' ')[0],
+                    type: diffLinks[1]//.split(' ')[1]
+                }
+            }
+        }
+        
+
+        const q = {
             tag: this.state.tag,
-            answer: this.state.answer
+            question: this.state.question,
+            answers: a
         }
 
-        //Add question via addQuestion action
-        //this.props.addQuestion(newQuestion);
-        alert('Add question here');
+        console.log(q);
 
-        axios.post('http://localhost:5000/admin/question', {params:{option: '1', body: newQuestion}})
+       axios({
+            method: 'post',
+            url: 'https://nameless-depths-96465.herokuapp.com/admin/question',
+            data: q
+        
+        })
         .then((response) => {
             this.setState(
-                {
-                    questions: response.data,
-                    isLoading: false
-                },
+              
             console.log(response.data))
         }, (error) => {
             console.log(error);
         });
 
-
-
-        /*{
-            "tag": "Initial",
-            "question": "Welcome to the Exploration bot experience!",
-            "answer":[
-                {
-                    "content":[{
-                        "body": "Start!"
-                    }],
-                    "link":[
-                        {
-                            "dbref": "5dc511aa878f510b88cf0160",
-                            "type": "Question"
-                    }]
-                }
-            ]
-        }*/
         //Close modal
         this.toggle();
     }
@@ -121,7 +126,16 @@ class QuestionModal extends Component {
                                 type="text"
                                 name="answer"
                                 id="answer"
-                                placeholder="Add Answer (answer 1, answer 2, ...)"
+                                placeholder="Add Answer (a1,a2,a3, ...)"
+                                onChange={this.onChange}
+                                >
+                                </Input>
+                                <Label for = "link">Link</Label>
+                                <Input
+                                type="text"
+                                name="link"
+                                id="link"
+                                placeholder="Add Links (DBref1 Type1, DBref2 Type2, ...)"
                                 onChange={this.onChange}
                                 >
                                 </Input>
@@ -145,4 +159,4 @@ const mapStateToProps = state => ({
     question: state.question
 });
 
-export default connect(mapStateToProps, {addQuestion})(QuestionModal);
+export default connect(mapStateToProps)(QuestionModal);

@@ -4,12 +4,11 @@ import axios from 'axios';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
-import { getQuestions, deleteQuestion } from '../actions/questionActions';
+//import { getQuestions, deleteQuestion } from '../actions/questionActions';
 import PropTypes from 'prop-types';
 //import { getCall } from './test';
 
-//const API = 'http://localhost:5000/admin/question';
-//const DEFAULT_QUERY = 'redux';
+
 class QuestionList extends Component {
 
     constructor(props){
@@ -18,13 +17,13 @@ class QuestionList extends Component {
         questions: [],
         isLoading: false,
         error: null,
+        singleQuestion: []
     };
 }
 
      componentDidMount() {
-        //alert("Need to grab questions here");
 
-        axios.get('http://localhost:5000/admin/question', {params:{option: '0'}})
+        axios.get('https://nameless-depths-96465.herokuapp.com/admin/question', {params:{option: '0'}})
         .then((response) => {
             this.setState(
                 {
@@ -37,18 +36,16 @@ class QuestionList extends Component {
         });
     }
 
-    onDeleteClick = (_id) => {
-        alert("Pressed Delete");
-        //this.props.deleteQuestion(_id);
-        //option : 1, _id : _id
-        axios.delete('http://localhost:5000/admin/question', {params:{option: '1', id: _id}})
+    onDeleteClick = (tag) => {
+        alert("Pressed Delete: " + tag);
+       
+        axios({
+            method: 'delete',
+            url: 'https://nameless-depths-96465.herokuapp.com/admin/question',
+            params: {option: '1', name: tag}
+        })
         .then((response) => {
-            this.setState(
-                {
-                    questions: response.data,
-                    isLoading: false
-                },
-            console.log(response.data))
+            console.log(response.data)
         }, (error) => {
             console.log(error);
         });
@@ -56,19 +53,23 @@ class QuestionList extends Component {
 
     onInfoClick = (_id) => {
 
-        alert("Pressed More info click");
-        //this.props.getQuestions();
-        axios.get('http://localhost:5000/admin/question', {params:{option: '1', id: _id}})
+        alert(_id);
+
+        /*axios.get('https://nameless-depths-96465.herokuapp.com/admin/question', {params:{option: '1', tag: _id}})
         .then((response) => {
+            console.log(response);
             this.setState(
                 {
-                    questions: response.data,
+                    singleQuestion: response.data,
                     isLoading: false
                 },
-            console.log(response.data))
+            alert(this.props.singleQuestion))
         }, (error) => {
             console.log(error);
-        });
+        });*/
+
+        //const [qs, setQs]  = useState(0);
+        //alert(qs[0].id);
     }
 
     render() {
@@ -92,7 +93,7 @@ class QuestionList extends Component {
                                         className="remove-btn"
                                         color="danger"
                                         size="sm"
-                                        onClick={this.onDeleteClick.bind(this, _id)}
+                                        onClick={this.onDeleteClick.bind(this, tag)}
                                     >
                                         &times;
                                     </Button>
@@ -115,16 +116,16 @@ class QuestionList extends Component {
     }
 }
 
-QuestionList.propTypes = {
+/*QuestionList.propTypes = {
     getQuestions: PropTypes.func.isRequired,
     question: PropTypes.object.isRequired
-}
+}*/
 
 const mapStateToProps = (state) => ({
     question: state.question
 });
 
 export default connect(
-    mapStateToProps, 
-    { getQuestions, deleteQuestion }
+    mapStateToProps
+    //{ getQuestions, deleteQuestion }
     )(QuestionList);
