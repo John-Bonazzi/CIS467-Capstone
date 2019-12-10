@@ -1,8 +1,7 @@
 /**
  * Defines all the possible routes in the server.
  * Each route is a string containing the absolute path from the host address.
- * @name config/routes
- * @type {json}
+ * @module config/routes
  */
 module.exports = {
     questionRoute: '/admin/question',

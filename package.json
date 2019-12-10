@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "doc:build": "jsdoc src/routing/admin/question_admin.js",
-    "doc:test": "documentation build src/routing/admin/question_admin.js -f html -o doc",
+    "doc:build": "jsdoc -r src/* -d ./documentation",
     "server:start": "nodemon ./src/server"
   },
   "repository": {

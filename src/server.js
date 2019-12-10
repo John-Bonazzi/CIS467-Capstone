@@ -26,11 +26,8 @@ const app = express();
 var PORT = process.env.PORT || 5000;
 
 /**
- * The body parser module is a middleware piece of software
- * that extracts the body portion of the request stream,
- * and can be accessed on req.body.
- * In short, it takes the body of a HTTP request
- * and make it readable.
+ * The body parser module is a middleware piece of software that extracts the body portion of the request stream and can be accessed on req.body.<br>
+ * In short, it takes the body of a HTTP request and make it readable.
  * @const {Object}
  */
 const bodyParser = require('body-parser');
@@ -38,12 +35,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
- * Allows for storing session-related values.
- * expires: false means that the session remains active as long as the user-agent is active, or the session is manually destroyed.
- * That means in the case the user closes the browser web, the session is destroyed.
- * maxAge, in msec, is the time between requests that has to pass before the session can be considered expired.
- * Unfortunately, most browser-webs ingore expires if there is a maxAge.
- * There is a choice to make: reset the session upon disconnection, or reset it upon inactivity.
+ * Allows for storing session-related values.<br>
+ * <code>expires: false</code> means that the session remains active as long as the user-agent is active, or the session is manually destroyed.
+ * That means in the case the user closes the browser web, the session is destroyed.<br>
+ * <code>maxAge</code>, in msec, is the time between requests that has to pass before the session can be considered expired.
+ * Unfortunately, most browser-webs ingore expires if there is a maxAge.<br>
+ * There is a choice to make: reset the session upon disconnection, or reset it upon inactivity.<br>
  * Note that maxAge is highly recommended in most cases, while expire is an old standard.
  * @name app_session
  */
@@ -63,6 +60,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+// The order is important here!
+// express will evaluate the routes in sequence.
+// Thus, a get-all wildcard should be defined after the rest.
 app.use('', router_admin_question);
 app.use('', router_admin_course);
 app.use('', router_user);

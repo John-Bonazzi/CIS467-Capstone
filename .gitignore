@@ -6,4 +6,4 @@ node_modules/
 *.sh
 *.html
 /doc
-/out
+/documentation

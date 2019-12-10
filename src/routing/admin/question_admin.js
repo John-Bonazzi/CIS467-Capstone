@@ -20,11 +20,24 @@ const queries = require('./queries/admin_queries');
 const routines = require('../../routines/http_routines');
 
 /**
- * The POST request creates entries in the database.
- * The POST will create, not update, an
- * entry in the database.
+ * The POST request creates entries in the database, in the <code>Question</code> collection.
+ * The POST will create, not update, an entry in the database.<br>
  * PUT should be used to update a database entry.
- * @name postRoute
+ * By default <code>option = '1'</code>.<br>
+ * Available options:<ul>
+ * <li><code>0</code>: post many elements as an array of JSON objects, each separated by a comma. <br>Example: <code>[{object 1}, {object 2}, ...].</code></li>
+ * <li><code>1</code>: post a single element as a JSON object. <br>Example: <code>{object}</code></li>
+ * </ul>
+ * If the option passed does not match any of the provided options, a <code>400 Bad Request</code> is sent back as response.<br><br>
+ * Example of a request to add a single element:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:0px; margin-left: 40px">option: '1'},</p>
+ * body: {JSON object}<br>}</code><br><br>
+ * Example of a request to add multiple elements:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:0px; margin-left: 40px">option: '0'},</p>
+ * body: [{object 1}, {object 2}, ...]<br>}</code>
+ * @callback postRoute
  * @param {Object} req the request received from a client
  * @param {Object} res the response from the server
  * @see putRoute
@@ -48,13 +61,21 @@ router.route(questionRoute).post(function(req, res) {
 });
 
 /**
- * The GET request offers different options, passed in the request as an 'option' field, which is a string. 'options' defaults to '0'.
- * Note that requesting a 'tag' that is not in the database will result in a 'null' value being sent back.
- * While it has not properly tested, the request will end with a 200 OK message if the element has been found, or the element has not been found (null value). If an error occurred (server crashed, database disconnected etc...), an error message is sent back.
- * 0: get all the database. This does not require the 'name' body in the request, although its presence does not cause an error.
- * 1: asks the database for the entry with matching tag. Only one entry is returned.
- * If something weird happens in the option selection, likely because of an unsupported option, a 400 error is sent back as response.
- * @name getRoute
+ * The GET request offers different options, passed in the request as an <code>option</code> field in the parameters. By default <code>option = '0'</code>.<br>
+ * Available options:<ul>
+ * <li><code>0</code>: get all the database. This does not require the <code>name</code> parameter in the request, although its presence does not cause an error.</li>
+ * <li><code>1</code>: asks the database for the entry with matching tag. Only one entry is returned.<br> If the tag is empty or <code>null</code>, a null element is returned.</li></ul>
+ * If the option passed does not match any of the provided options, a <code>400 Bad Request</code> is sent back as response.<br><br>
+ * Example of a request to get an element with tag <code>Initial</code>:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">option: '1',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">name: 'Initial'}</p>
+ * }</code><br><br>
+ * Example of a request to get all the elements:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:0px; margin-left: 40px">option: '0'</p>
+ * }</code><br><br>
+ * @callback getRoute
  * @param {Object} req the request received from a client
  * @param {Object} res the response from the server
  */
@@ -101,7 +122,26 @@ router.route(questionRoute).get(function(req, res) {
  *  <li> Not all update operations are atomic. Specifically, option 2 is not atomic, so beware that an element could change after it has been pulled from the database, and before the update has been saved. </li>
  *  <li> I tested the request body by sending an x-www-form-urlencoded with Postman; I could NOT make the request work by sending a RAW JSON from the Postman body section of the request. I do not know if this will change how the frontend request has to be coded.</li>
  *  <li> It is possible to expand option 2 to modify all matching elements and not just one; however for that to work the query must be changed, as right now it calls a findOne() call. This might be useful if a course had been deleted and all dbrefs pointing to it have to be purged.</li></ul>
- * @name putRoute
+ * Example of a request to update the <code>question</code> in the <code>Initial</code> question to <code>Example</code>:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">option: '1',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">name: 'Initial'},</p>
+ * body: {
+ * <p style="LINE-HEIGHT:0px; margin-left: 40px">question: 'Example'}</p>
+ * }</code><br><br>
+ * 
+ * Example of a request to update the <code>body</code> of the first answer in the <code>Initial</code> question to <code>Example</code>:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">option: '2',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">name: 'Initial',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">element: '5deeba1d7dae0a0004109d0b',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">index: '0',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">field: 'content'},</p>
+ * body: {
+ * <p style="LINE-HEIGHT:0px; margin-left: 40px">body: 'Example'}</p>
+ * }</code><br><br>
+ * 
+ * @callback putRoute
  * @param {Object} req the request received from a client
  * @param {Object} res the response from the server
  */
@@ -129,14 +169,23 @@ router.route(questionRoute).put(function(req, res) {
 
 /**
  * The DELETE request is used to remove entries in the database.
- * Generally, a request is made up of the following elements:
- *  -
- * Different delete functions are provided, and the option to choose it is passed in the 'option' field in the request body, defaulted at '1'.
- * The option is a string, and the supported options are the following:
- * 0: delete all elements. Does not require a 'name' field in the request.
- * 1: delete a single element
- * If something weird happens in the option selection, likely because of an unsupported option, a 400 error is sent back as response.
- * @name deleteRoute
+ * Different delete functions are provided, and the option to choose it is passed in the <code>option</code> field in the parameters.<br>
+ * By default <code>option = '1'</code>.<br>
+ * The option is a string, and the supported options are the following:<ul>
+ * <li><code>0</code>: delete all elements. Does not require a <code>name</code> field in the request.</li>
+ * <li><code>1</code>: delete a single element.</li></ul>
+ * If the option passed does not match any of the provided options, a <code>400 Bad Request</code> is sent back as response.<br><br>
+ * Example of a request to delete the element with tag <code>Initial</code>:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">option: '1',</p>
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">name: 'Initial'}</p>
+ * }</code><br><br>
+ * Example of a request to delete all the elements:<br>
+ * <code>{<br>params: {
+ * <p style="LINE-HEIGHT:5px; margin-left: 40px">option: '0'</p>
+ * }</code><br><br>
+ * 
+ * @callback deleteRoute
  * @param {Object} req the request received from a client
  * @param {Object} res the response from the server
  */
