@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: routing/admin/course_admin</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: routing/admin/course_admin</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">The module provides definitions for all REST requests and routes that handle the admin side of the server.
+The routes contained in the module connect to a specific collection of the database that stores 'courses'.</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_course_admin.js.html">routing/admin/course_admin.js</a>, <a href="routing_admin_course_admin.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-error_handling_Error.html">module:error_handling/Error</a></li>
+        
+            <li>module:express</li>
+        
+            <li><a href="module-schemas_admin_course_schema.html">module:schemas/admin/course_schema</a></li>
+        
+            <li><a href="module-config_routes.html">module:config/routes</a></li>
+        
+            <li>module:routing/admin/queries/question_queries</li>
+        
+            <li><a href="module-routines_http_routines.html">module:routines/http_routines</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    
+    <h4 class="name" id="~deleteRoute"><span class="type-signature"></span>deleteRoute<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The DELETE request is used to remove entries in the database.
+Different delete functions are provided, and the option to choose it is passed in the <code>option</code> field in the parameters.<br>
+By default <code>option = '1'</code>.<br>
+The option is a string, and the supported options are the following:<ul>
+<li><code>0</code>: delete all elements. Does not require a <code>name</code> field in the request.</li>
+<li><code>1</code>: delete a single element.</li></ul>
+If the option passed does not match any of the provided options, a <code>400 Bad Request</code> is sent back as response.<br><br>
+Example of a request to delete the element with tag <code>CIS 467</code>:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:5px; margin-left: 40px">option: '1',</p>
+<p style="LINE-HEIGHT:5px; margin-left: 40px">name: 'CIS 467'}</p>
+}</code><br><br>
+Example of a request to delete all the elements:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:5px; margin-left: 40px">option: '0'</p>
+}</code><br><br>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the request received from a client</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the response from the server</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_course_admin.js.html">routing/admin/course_admin.js</a>, <a href="routing_admin_course_admin.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~getRoute"><span class="type-signature"></span>getRoute<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The GET request offers different options, passed in the request as an <code>option</code> field in the parameters. By default <code>option = '0'</code>.<br>
+Available options:<ul>
+<li><code>0</code>: get all the database. This does not require the <code>name</code> parameter in the request, although its presence does not cause an error.</li>
+<li><code>1</code>: asks the database for the entry with matching tag. Only one entry is returned.<br> If the tag is empty or <code>null</code>, a null element is returned.</li></ul>
+If the option passed does not match any of the provided options, a <code>400 Bad Request</code> is sent back as response.<br><br>
+Example of a request to get an element with tag <code>CIS 467</code>:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:5px; margin-left: 40px">option: '1',</p>
+<p style="LINE-HEIGHT:5px; margin-left: 40px">name: 'CIS 467'}</p>
+}</code><br><br>
+Example of a request to get all the elements:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:0px; margin-left: 40px">option: '0'</p>
+}</code><br><br>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the request received from a client</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the response from the server</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_course_admin.js.html">routing/admin/course_admin.js</a>, <a href="routing_admin_course_admin.js.html#line62">line 62</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~postRoute"><span class="type-signature"></span>postRoute<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The POST request creates entries in the database, in the <code>Course</code>.
+The POST will create, not update, an entry in the database.<br>
+PUT should be used to update a database entry.
+By default <code>option = '1'</code>.<br>
+Available options:<ul>
+<li><code>0</code>: post many elements as an array of JSON objects, each separated by a comma. <br>Example: <code>[{object 1}, {object 2}, ...].</code></li>
+<li><code>1</code>: post a single element as a JSON object. <br>Example: <code>{object}</code></li>
+</ul>
+If the option passed does not match any of the provided options, a <code>400 Bad Request</code> is sent back as response.<br><br>
+Example of a request to add a single element:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:0px; margin-left: 40px">option: '1'},</p>
+body: {JSON object}<br>}</code><br><br>
+Example of a request to add multiple elements:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:0px; margin-left: 40px">option: '0'},</p>
+body: [{object 1}, {object 2}, ...]<br>}</code>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the request received from a client</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the response from the server</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_course_admin.js.html">routing/admin/course_admin.js</a>, <a href="routing_admin_course_admin.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>putRoute</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+                
+
+    
+
+    
+    <h4 class="name" id="~putRoute"><span class="type-signature"></span>putRoute<span class="signature">(req, res)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The PUT request is used to modify one entry in the database.
+The entry has to exist in the database, it does not create one.<br>
+The validators in the schema will be checked on update: for example, an element's tag cannot be updated if the new tag is already existing in the database.<br><br>
+Example of a request to update the description to of <code>CIS 467</code> to <code>Example</code>:<br>
+<code>{<br>params: {
+<p style="LINE-HEIGHT:0px; margin-left: 40px">name: 'CIS 467'},</p>
+body: {
+<p style="LINE-HEIGHT:0px; margin-left: 40px">description: 'Example'}</p>
+}</code><br><br>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the request received from a client</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the response from the server</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_course_admin.js.html">routing/admin/course_admin.js</a>, <a href="routing_admin_course_admin.js.html#line99">line 99</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_keys.html">config/keys</a></li><li><a href="module-config_routes.html">config/routes</a></li><li><a href="module-error_handling_Error.html">error_handling/Error</a></li><li><a href="module-routines_http_routines.html">routines/http_routines</a></li><li><a href="module-routing_admin_course_admin.html">routing/admin/course_admin</a></li><li><a href="module-routing_admin_queries_admin_queries.html">routing/admin/queries/admin_queries</a></li><li><a href="module-routing_admin_question_admin.html">routing/admin/question_admin</a></li><li><a href="module-routing_root_route.html">routing/root_route</a></li><li><a href="module-routing_user_queries_queries.html">routing/user/queries/queries</a></li><li><a href="module-routing_user_router_user.html">routing/user/router_user</a></li><li><a href="module-schemas_admin_course_schema.html">schemas/admin/course_schema</a></li><li><a href="module-schemas_admin_question_schema.html">schemas/admin/question_schema</a></li><li><a href="module-server.html">server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Dec 10 2019 00:28:42 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

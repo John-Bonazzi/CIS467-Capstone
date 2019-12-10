@@ -4,6 +4,4 @@ node_modules/
 /.vscode
 /Database files
 *.sh
-*.html
 /doc
-/documentation

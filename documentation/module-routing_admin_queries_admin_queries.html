@@ -1,0 +1,2696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: routing/admin/queries/admin_queries</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: routing/admin/queries/admin_queries</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">The module contains a set of provided short hand mongoose query calls.
+The queries provided should be used by the admin side of the front-end.</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~deleteAllElements"><span class="type-signature">(inner) </span>deleteAllElements<span class="signature">(database)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query is shorthand for deleting all elements in the database.
+No search term has to be passed, as it defaults to any element (the empty set '{}').<br>
+The callback from the query returns, in this case, the whole collection.
+At the end of this call, the collection is effectively wiped out, so be careful in calling it.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.elements</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the deleted collection of elements.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line201">line 201</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~deleteField"><span class="type-signature">(inner) </span>deleteField<span class="signature">(database, searchTerm, field)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query deletes the requested fields, or sub-documents, in a document.
+The field is a list of values: it is possible to remove multiple fields in one call.<br>
+However, it is not possible to remove all the occurences of field from different documents in the collection.
+For that, see <code>deleteFieldFromAll</code>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A JSON containing the field(s) to remove.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>deleteFieldFromAll</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~deleteFieldFromAll"><span class="type-signature">(inner) </span>deleteFieldFromAll<span class="signature">(database, field)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Similar to <code>deleteField</code>, but applies the changes to all documents in the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A JSON containing the field(s) to remove.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line184">line 184</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>deleteField</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~deleteOneElement"><span class="type-signature">(inner) </span>deleteOneElement<span class="signature">(database, searchTerm)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query deletes one element, the first one matching the search term provided.<br>
+The callback from the query returns the deleted element.
+This query deletes the whole element, not part of it.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the deleted database element.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line150">line 150</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~getAllElements"><span class="type-signature">(inner) </span>getAllElements<span class="signature">(database, searchTerm, selectTerm)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query gets all elements in the database.
+If an error occurs, <code>e</code> will be set to true.<br>
+Generally, an error means that the server had a problem.
+It does not return an error in the case the database is empty, as 'empty' is a valid response to querying all elements.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selectTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database element returned by the query.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~getOneElement"><span class="type-signature">(inner) </span>getOneElement<span class="signature">(database, searchTerm, selectTerm)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query gets a single element from the database, found using the searchTerm value.
+If an error occurs, <code>e</code> will be set to true.<br>
+Generally, an error means that the element was not found in the database.
+This error does not account for connectivity issues, or for other internal server errors.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selectTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database element returned by the query.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~postManyElements"><span class="type-signature">(inner) </span>postManyElements<span class="signature">(database, newElementArr)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query takes an array of documents to save in the database.
+The query runs the mongoose schema validators for each entry, and saves to the database all entries that pass the validators.<br>
+The storing of the documents is done in bulk, with only one operation.
+If <code>ordered = false</code>, then the error will reports all the documents that have failed the validators. If true, stop the operation at the first document that fails the validators, not saving anything on the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>newElementArr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;json></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an array of populated Schema objects, each containing a document to save to the database.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.err</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, false if there is no error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~postOneElement"><span class="type-signature">(inner) </span>postOneElement<span class="signature">(newElement)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query takes a database entry in the form of a mongoose Schema object, and inserts it into the database.
+If an error occurs, <code>e</code> will be set to true.<br>
+Generally, this means that the server was not able to save on the database, most of the time because another element with the same unique key is in the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">a Schema object containing the entry to insert in the database.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">bool</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~updateOneAnswer"><span class="type-signature">(inner) </span>updateOneAnswer<span class="signature">(database, searchTerm, field, fieldID, index, update)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query is used to update a nested sub-document.
+Due its complexity, it requires a lot of information to find the correct field to update.<br>
+Note: first, the entire document is pulled from the database, then the sub-document with the field is selected, the field updated, and then the new document is saved back.<br>
+Because of that the operation is not atomic, so beware of changes in the document happening between pulling it from the database, and saving the new one.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the name of the sub-document, or the array that contains the field to update.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.ObjectID</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the <code>_id</code> associated with the desired <code>field</code>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+|
+
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the position of the <code>field</code> in the array of <code>answers</code>.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>update</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">a <code>field:value</code> pair that specifies the field to update with its new value.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the updated database element.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line125">line 125</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~updateOneDocument"><span class="type-signature">(inner) </span>updateOneDocument<span class="signature">(database, searchTerm, update)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    The query updates a field at the top level of the document.
+If an error occurs, <code>e</code> will be set to true.<br>
+Generally, that means that the element was not found, or the update does not pass the database's constraints.<br>
+This does not update a sub-document.
+If you want to modify a sub-document, like a field in one index in <code>answers</code>, see <code>updateOneAnswer</code>.<br>
+The operation is atomic and operates on the database without pulling the original element.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>update</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">JSON containing the field(s) to update/add.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.e</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">an error message, null if there is no error.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.element</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">the updated database element.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routing_admin_queries_admin_queries.js.html">routing/admin/queries/admin_queries.js</a>, <a href="routing_admin_queries_admin_queries.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_keys.html">config/keys</a></li><li><a href="module-config_routes.html">config/routes</a></li><li><a href="module-error_handling_Error.html">error_handling/Error</a></li><li><a href="module-routines_http_routines.html">routines/http_routines</a></li><li><a href="module-routing_admin_course_admin.html">routing/admin/course_admin</a></li><li><a href="module-routing_admin_queries_admin_queries.html">routing/admin/queries/admin_queries</a></li><li><a href="module-routing_admin_question_admin.html">routing/admin/question_admin</a></li><li><a href="module-routing_root_route.html">routing/root_route</a></li><li><a href="module-routing_user_queries_queries.html">routing/user/queries/queries</a></li><li><a href="module-routing_user_router_user.html">routing/user/router_user</a></li><li><a href="module-schemas_admin_course_schema.html">schemas/admin/course_schema</a></li><li><a href="module-schemas_admin_question_schema.html">schemas/admin/question_schema</a></li><li><a href="module-server.html">server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Dec 10 2019 00:28:42 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

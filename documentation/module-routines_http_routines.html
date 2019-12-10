@@ -1,0 +1,3227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Module: routines/http_routines</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Module: routines/http_routines</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        
+            
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description">Routines are basically functions to be executed by the server in
+response to an event.<br>
+While the 'routing' decides what routines to execute based on the request,
+the routines decide how to handle the data requested.<br>
+Routines can do data manipulation, while queries should not do any work on the data, but provide an easy to use abstraction of the syntax and options, with documentations, for some of the harder mongoose queries.</div>
+        
+
+        
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li><a href="module-error_handling_Error.html">module:error_handling/Error</a></li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~delete_all"><span class="type-signature">(inner) </span>delete_all<span class="signature">(res, queryAgent, database)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to delete an entire collection.
+Since this is a dangerous operation, the routine sends back to the client a backup of the deleted collection as a json (has to be parsed).
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line258">line 258</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~delete_field_from_all"><span class="type-signature">(inner) </span>delete_field_from_all<span class="signature">(res, queryAgent, database, field)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Similar to <code>delete_field_from_one</code>, but it acts on the whole collection.<br>
+This is useful if an entry in the database is removed, and you want to remove all references to that element from the collection.
+This acts on an entire collection.<br>
+It does not allow to specify a subset of the collection to update.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the fields and their values to find and delete.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line280">line 280</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~delete_field_from_one"><span class="type-signature">(inner) </span>delete_field_from_one<span class="signature">(res, queryAgent, database, searchTerm, field)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to delete field(s) from one element.
+Similar to <code>delete_one</code>, but acts on a field, not a document.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the fields and their values to find and delete.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line239">line 239</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>delete_one</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~delete_one"><span class="type-signature">(inner) </span>delete_one<span class="signature">(res, queryAgent, database, searchTerm)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to delete one element.
+After deletion, the element is temporarily stored in <code>element</code> (not used).
+While the actual definition of <code>deleteOneElement</code> is arbitrary, the routine should not be allowed to delete more than one element per function call.
+For example, passing <code>'{}'</code> as search term should not delete all the collection, but only the first element.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line217">line 217</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~destroy_session"><span class="type-signature">(inner) </span>destroy_session<span class="signature">(req)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to wipe a session and restart with a clean cookie.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express req Object that contains the session storage.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line296">line 296</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~get_all"><span class="type-signature">(inner) </span>get_all<span class="signature">(res, queryAgent, database)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to use when all the elements in the database are required.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line95">line 95</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~get_init"><span class="type-signature">(inner) </span>get_init<span class="signature">(req, res, queryAgent, database, searchTerm, selectTerm)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine for a user's first get request, loading the first element in the database.
+If no element is present, this routine sets the status as <code>500 Internal Server Error</code>.<br>
+This is because the client doesn't send anything with the request, so it is an internal problem in the server.<br>
+It works similarly to <code>get_one</code>, see <code>get_one</code> documentation to know how it works.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express req Object used by the client to send a request.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selectTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line26">line 26</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>get_one</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~get_one"><span class="type-signature">(inner) </span>get_one<span class="signature">(res, queryAgent, database, searchTerm, selectTerm)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to use when a single element is required from the database.
+This assumes that the <code>queryAgent</code> has a <code>getOneElement</code> function.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selectTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~get_one_check_closure"><span class="type-signature">(inner) </span>get_one_check_closure<span class="signature">(req, res, queryAgent, database, searchTerm, selectTerm, close)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to use when a single element is required from the database.
+This assumes that the <code>queryAgent</code> has a <code>getOneElement</code> function.<br>
+If cookies are enabled, the routine also checks whether a <code>Course</code> has been requested: if so, the session cookies are wiped clean so that the user can start anew.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>req</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express req Object used by the client to send a request.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selectTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the fields in the database to be shown in the requested JSON document. If the field is not specified here, it will not be shown in the document. An empty string shows all fields.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>close</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Tells the server to stop and wipe the session.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~post_many"><span class="type-signature">(inner) </span>post_many<span class="signature">(res, queryAgent, database, elementsArr)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to store an array of elements in the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>elementsArr</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;json></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">an array of json documents, each json corresponding to a new entry in the database.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line132">line 132</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~post_one"><span class="type-signature">(inner) </span>post_one<span class="signature">(res, queryAgent, newElement)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to store a new element in the database.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>newElement</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">an element that is created following the Schema.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~update_one_answer"><span class="type-signature">(inner) </span>update_one_answer<span class="signature">(res, queryAgent, database, searchTerm, field, fieldID, index, update)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to update a field nested in a document.
+The nested field could be part of an array, or a sub-document, but must be nested into the field <code>answers</code>.<br>
+Depending on the implementation of <code>updateOneAnswer</code>, a new field could be created, but that should not be assumed as always the case.<br>
+Note that, due the complexity of nested sub-documents and array, a variety of information are required for the request.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>field</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the literal name of the field container where to find the lowest-level field to update as defined in the schema. For example, if you need to update <code>body</code>, then field has to be <code>content</code></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>fieldID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.ObjectID</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the <code>_id</code> of the part of the field to update, so that the correct one can be selected</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>index</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+|
+
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the position of the field's container in the <code>answers</code> array, going from 0 (the first element), to the number of answers - 1.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>update</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">a <code>name:value</code> couple that indicates the field to update, and its new value.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line195">line 195</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~update_one_doc"><span class="type-signature">(inner) </span>update_one_doc<span class="signature">(res, queryAgent, database, searchTerm, update)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to update one element. 
+The routine updates a single field in an element.<br>
+Depending on the definition of <code>updateOneElement</code>, a new element, or field, can be created if it does not already exist. <br>
+Note that the element <em>must</em> be a top-level field, not a field in a nested sub-document or array.<br>
+To modify a nested field, see <code>update_one_answer</code>.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>res</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the Express res Object used to send back a response.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>queryAgent</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">module</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the module containing the queries to use</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>database</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">mongoose.Schema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the database as defined in a mongoose schema</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>searchTerm</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the terms used for the database search</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>update</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">json</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON containing the field to update, and its new value</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li>update_one_answer</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        
+                
+
+    
+
+    
+    <h4 class="name" id="~callback"><span class="type-signature"></span>callback<span class="signature">(memory, data)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Routine to append the array contained in data to the storage in memory.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>memory</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">memory for storing data.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>data</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the data to be stored.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>callback.result</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the resulting concatenated array.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="routines_http_routines.js.html">routines/http_routines.js</a>, <a href="routines_http_routines.js.html#line144">line 144</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_keys.html">config/keys</a></li><li><a href="module-config_routes.html">config/routes</a></li><li><a href="module-error_handling_Error.html">error_handling/Error</a></li><li><a href="module-routines_http_routines.html">routines/http_routines</a></li><li><a href="module-routing_admin_course_admin.html">routing/admin/course_admin</a></li><li><a href="module-routing_admin_queries_admin_queries.html">routing/admin/queries/admin_queries</a></li><li><a href="module-routing_admin_question_admin.html">routing/admin/question_admin</a></li><li><a href="module-routing_root_route.html">routing/root_route</a></li><li><a href="module-routing_user_queries_queries.html">routing/user/queries/queries</a></li><li><a href="module-routing_user_router_user.html">routing/user/router_user</a></li><li><a href="module-schemas_admin_course_schema.html">schemas/admin/course_schema</a></li><li><a href="module-schemas_admin_question_schema.html">schemas/admin/question_schema</a></li><li><a href="module-server.html">server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Dec 10 2019 00:28:42 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

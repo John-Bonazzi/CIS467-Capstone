@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * The Core of the server.
+ * The module starts up the server and attaches all the different modules together.
+ * @module server
+ * @requires express
+ * @requires mongoose
+ * @requires express-session
+ * @requires routing/admin/question_admin
+ * @requires routing/admin/course_admin
+ * @requires routing/user/router_user
+ * @requires routing/root_route
+ * @requires body-parser
+ */
+
+const express = require('express');
+const mongoose = require('mongoose');
+const session = require('express-session');
+
+const router_admin_question = require('./routing/admin/question_admin');
+const router_admin_course = require('./routing/admin/course_admin');
+const router_user = require('./routing/user/router_user');
+const root = require('./routing/root_route');
+
+const app = express();
+
+var PORT = process.env.PORT || 5000;
+
+/**
+ * The body parser module is a middleware piece of software that extracts the body portion of the request stream and can be accessed on req.body.&lt;br>
+ * In short, it takes the body of a HTTP request and make it readable.
+ * @const {Object}
+ */
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/**
+ * Allows for storing session-related values.&lt;br>
+ * &lt;code>expires: false&lt;/code> means that the session remains active as long as the user-agent is active, or the session is manually destroyed.
+ * That means in the case the user closes the browser web, the session is destroyed.&lt;br>
+ * &lt;code>maxAge&lt;/code>, in msec, is the time between requests that has to pass before the session can be considered expired.
+ * Unfortunately, most browser-webs ingore expires if there is a maxAge.&lt;br>
+ * There is a choice to make: reset the session upon disconnection, or reset it upon inactivity.&lt;br>
+ * Note that maxAge is highly recommended in most cases, while expire is an old standard.
+ * @name app_session
+ */
+app.use(session({
+  secret: 'capstone',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: false,
+    maxAge: 5 * 60 * 1000, //convert 1 sec (1000 msec) to 5 mins. 5 + 1 min in 60 sec, 60 * 1 sec in 1000 msec.
+  }
+}));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+// The order is important here!
+// express will evaluate the routes in sequence.
+// Thus, a get-all wildcard should be defined after the rest.
+app.use('', router_admin_question);
+app.use('', router_admin_course);
+app.use('', router_user);
+app.use('', root);
+
+// Connection string for the database connection.
+const database_agent = require('./config/keys');
+
+/**
+ * Connect the server to the database to provide the service.
+ * @name mongoConnection
+ * @type {Function}
+ */
+mongoose.connect(database_agent.mongoURI, {useNewUrlParser: true, useUnifiedTopology: true})
+  .then(() => console.log('Connection to the database established'),
+    err => console.log(`Could not connect to the database.\nError code: ${err}`));
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+module.exports = app;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-config_keys.html">config/keys</a></li><li><a href="module-config_routes.html">config/routes</a></li><li><a href="module-error_handling_Error.html">error_handling/Error</a></li><li><a href="module-routines_http_routines.html">routines/http_routines</a></li><li><a href="module-routing_admin_course_admin.html">routing/admin/course_admin</a></li><li><a href="module-routing_admin_queries_admin_queries.html">routing/admin/queries/admin_queries</a></li><li><a href="module-routing_admin_question_admin.html">routing/admin/question_admin</a></li><li><a href="module-routing_root_route.html">routing/root_route</a></li><li><a href="module-routing_user_queries_queries.html">routing/user/queries/queries</a></li><li><a href="module-routing_user_router_user.html">routing/user/router_user</a></li><li><a href="module-schemas_admin_course_schema.html">schemas/admin/course_schema</a></li><li><a href="module-schemas_admin_question_schema.html">schemas/admin/question_schema</a></li><li><a href="module-server.html">server</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Dec 10 2019 00:28:42 GMT-0500 (Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
