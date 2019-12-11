@@ -7,7 +7,6 @@ import {
     FormGroup,
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import OneQuestion from './OneQuestion';
 import Answers from './Answers';
 import { Container } from 'react-floating-action-button';
 import { Button as FAB } from 'react-floating-action-button';
@@ -59,7 +58,7 @@ class ChatModal extends Component {
                 <FAB
                         tooltip="Click Here To Chat!"
                         styles={{backgroundColor: "#0e66a2"}}
-                        icon= "./Icons/message.png"
+                        className="FAB-icon"
                         rotate={true}
                         onClick={this.toggle}>
                 </FAB>

@@ -19,18 +19,18 @@ class App extends Component {
       <Provider store={store}>
         <div className="App">
           <AppNavbar/>
-          <Container className="padding">
+          <Container className="padding-bot">
             <QuestionModal/>
             <h2>Questions</h2>
             <QuestionList/>
-            <h2>Courses</h2>
+            <h2 className="padding-top">Courses</h2>
             <CourseList/>
             <ChatModal/>
           </Container>
         </div>
       </Provider>
       {
-      <img src={Image} className="img"/>
+      <img src={Image} className="img" id="picture"/>
       }
       </div>
     );

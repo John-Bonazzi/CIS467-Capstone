@@ -90,10 +90,18 @@
     width: 95%;
 }
 
-.padding{
-    padding-bottom: 3rem;
+.padding-bot{
+    padding-bottom: 2rem;
 }
 
-.FAB-background{
-    background-image: url('https://www.cis.gvsu.edu/wp-content/uploads/2019/11/SCIS_text.png');
+.padding-top{
+    padding-top: 2rem;
+}
+
+.padding-right{
+    padding-right: 1rem;
+}
+
+.FAB-icon{
+    background-image: url('https://flaticons.net/gd/makefg.php?i=icons/Mobile%20Application/Chat.png&r=255&g=255&b=255') !important;
 }
